@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATAVA Meelad Live Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+        
+        body { 
+            background: radial-gradient(circle at center, #0f2b1d 0%, #05140e 100%); 
+            color: #ffffff; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* LED Border Glow Effect */
+        .dashboard-container {
+            border: 4px solid #10b981;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), inset 0 0 20px rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            background: rgba(10, 25, 18, 0.85);
+            max-width: 1400px;
+            width: 100%;
+            margin: auto;
+            padding: 25px;
+            display: block;
+        }
+
+        /* Main Grid Simulation for Layout */
+        .main-layout {
+            display: table;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 20px 0;
+        }
+        .main-col-left {
+            display: table-cell;
+            width: 70%;
+            vertical-align: top;
+        }
+        .main-col-right {
+            display: table-cell;
+            width: 30%;
+            vertical-align: top;
+        }
+
+        /* Top Header Board */
+        .main-header {
+            text-align: center;
+            border-bottom: 2px dashed rgba(16, 185, 129, 0.3);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .main-header h1 {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            color: #ffeb3b;
+            text-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+            font-weight: 900;
+        }
+        .main-header p {
+            color: #a7f3d0;
+            font-size: 1.1rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Live Stage Display Area */
+        .stage-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.2) 100%);
+            border: 2px solid #047857;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .live-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            animation: blink 1.2s infinite;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+        }
+        .item-category {
+            font-size: 1.3rem;
+            color: #34d399;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .current-item {
+            font-size: 2.8rem;
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .on-stage-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+            display: inline-block;
+            min-width: 80%;
+            border-left: 5px solid #ffeb3b;
+        }
+        .chest-num {
+            font-size: 1.5rem;
+            color: #ffeb3b;
+            font-weight: 800;
+        }
+        .participant-name {
+            font-size: 2.2rem;
+            color: #ffffff;
+            font-weight: 700;
+            margin-top: 5px;
+        }
+
+        /* Next Up Sidebar List */
+        .sidebar-panel {
+            background: rgba(15, 32, 24, 0.8);
+            border: 2px solid #115e59;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 100%;
+        }
+        .sidebar-title {
+            font-size: 1.2rem;
+            color: #38bdf8;
+            font-weight: 800;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #115e59;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .next-list-item {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            transition: 0.3s;
+        }
+        .next-list-item:hover {
+            background: rgba(56, 189, 248, 0.08);
+            transform: translateX(5px);
+        }
+        .next-chest {
+            color: #38bdf8;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+        .next-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-top: 2px;
+        }
+
+        /* Interactive Result Reveal Panel */
+        .result-overlay {
+            display: none;
+            background: linear-gradient(to bottom, rgba(15,23,42,0.95), rgba(6,78,59,0.95));
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            animation: zoomIn 0.5s ease forwards;
+            margin-top: 20px;
+        }
+        .result-title {
+            color: #ffd700;
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255,215,0,0.4);
+        }
+        .winners-row {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            margin-top: 15px;
+        }
+        .winner-position-cell {
+            display: table-cell;
+            vertical-align: bottom;
+            padding: 10px;
+        }
+        .winner-podium {
+            background: rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px 10px;
+        }
+        .podium-1 { border-color: #ffd700; background: linear-gradient(to top, rgba(255,215,0,0.1), rgba(0,0,0,0.4)); }
+        .podium-2 { border-color: #c0c0c0; background: linear-gradient(to top, rgba(192,192,192,0.1), rgba(0,0,0,0.4)); }
+        .podium-3 { border-color: #cd7f32; background: linear-gradient(to top, rgba(205,127,50,0.1), rgba(0,0,0,0.4)); }
+        
+        .cup-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .cup-1 { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
+        .cup-2 { color: #c0c0c0; text-shadow: 0 0 10px #c0c0c0; }
+        .cup-3 { color: #cd7f32; text-shadow: 0 0 10px #cd7f32; }
+
+        .winner-place-text { font-weight: 800; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase;}
+        .w-name { font-size: 1.4rem; font-weight: 700; color: #ffffff; }
+        .w-chest { color: #a7f3d0; font-weight: 600; font-size: 0.9rem; margin-top: 3px; }
+
+        /* Fake Control Panel for testing at bottom */
+        .test-control-panel {
+            background: #ffffff;
+            color: #1e293b;
+            max-width: 1400px;
+            width: 100%;
+            margin: 25px auto 0;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .test-title { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; color: #64748b; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;}
+        .ctrl-btn { background: #0f5132; color: white; border: none; padding: 8px 14px; font-weight: 700; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-right: 8px; margin-bottom: 8px;}
+        .ctrl-btn:hover { background: #0b3d25; }
+        .ctrl-btn-red { background: #ef4444; }
+        .ctrl-btn-red:hover { background: #dc2626; }
+
+        /* Footer Info */
+        .footer-logo-text {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .footer-logo-text span { color: #0284c7; font-weight: 900;}
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="main-header">
+            <h1 id="festTitle">MEELAD FEST 2026</h1>
+            <p id="subTitle">MAHLLUL MARHABA MADRASA ART FESTIVAL</p>
+        </div>
+
+        <div class="main-layout">
+            <div class="main-col-left">
+                <div class="stage-card" id="stageCard">
+                    <div class="live-badge"><i class="fa-solid fa-circle"></i> LIVE STAGE</div>
+                    <div class="item-category" id="lblCategory">JUNIOR CATEGORY</div>
+                    <div class="current-item" id="lblEventName">MADH SONG (മദ്ഹ് ഗാനം)</div>
+                    
+                    <div class="on-stage-box">
+                        <div class="chest-num"><i class="fa-solid fa-id-card"></i> CHEST NO: <span id="lblChestNo">104</span></div>
+                        <div class="participant-name" id="lblPartName">Muhammed Shamil K.</div>
+                    </div>
+                </div>
+
+                <div class="result-overlay" id="resultOverlay">
+                    <div class="result-title" id="lblResultTitle"><i class="fa-solid fa-trophy"></i> WINNERS: മദ്ഹ് ഗാനം (JUNIOR)</div>
+                    <div class="winners-row">
+                        <div class="winner-position-cell">
+                            <div class="winner-podium podium-2">
+                                <div class="cup-icon cup-2"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="winner-place-text" style="color: #cbd5e1;">2nd Place</div>
+                                <div class="w-name" id="w2-name">Fathima Riya</div>
+                                <div class="w-chest" id="w2-chest">Chest No: 112</div>
+                            </div>
+                        </div>
+                        <div class="winner-position-cell">
+                            <div class="winner-podium podium-1">
+                                <div class="cup-icon cup-1"><i class="fa-solid fa-crown"></i></div>
+                                <div class="winner-place-text" style="color: #ffd700;">1st Place / WINNER</div>
+                                <div class="w-name" id="w1-name">Muhammed Shamil K.</div>
+                                <div class="w-chest" id="w1-chest">Chest No: 104</div>
+                            </div>
+                        </div>
+                        <div class="winner-position-cell">
+                            <div class="winner-podium podium-3">
+                                <div class="cup-icon cup-3"><i class="fa-solid fa-trophy"></i></div>
+                                <div class="winner-place-text" style="color: #9a3412;">3rd Place</div>
+                                <div class="w-name" id="w3-name">Ahmed Yasir</div>
+                                <div class="w-chest" id="w3-chest">Chest No: 105</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-col-right">
+                <div class="sidebar-panel">
+                    <div class="sidebar-title"><i class="fa-solid fa-forward-step"></i> NEXT UP (അടുത്തത്)</div>
+                    <div id="nextUpContainer">
+                        <div class="next-list-item">
+                            <div class="next-chest">CHEST NO: 105</div>
+                            <div class="next-name">Ahmed Yasir</div>
+                        </div>
+                        <div class="next-list-item">
+                            <div class="next-chest">CHEST NO: 108</div>
+                            <div class="next-name">Aisha Minha</div>
+                        </div>
+                        <div class="next-list-item">
+                            <div class="next-chest">CHEST NO: 112</div>
+                            <div class="next-name">Fathima Riya</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-logo-text">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
+    </div>
+
+    <div class="test-control-panel">
+        <div class="test-title"><i class="fa-solid fa-gears"></i> Admin Demo Control Board (ടെസ്റ്റ് ചെയ്യാൻ ഇവിടെ ഞെക്കൂ)</div>
+        <button class="ctrl-btn" onclick="updateStage('SUB JUNIOR', 'QIRATH (ഖിറാഅത്ത്)', '201', 'Ameen Raza')">1. Next Item Switch (ഖിറാഅത്ത്)</button>
+        <button class="ctrl-btn" onclick="updateStage('SENIOR', 'SPEECH (പ്രസംഗം)', '305', 'Nihal Ahsani')">2. Next Item Switch (പ്രസംഗം)</button>
+        <button class="ctrl-btn" onclick="showFakeResult('SPEECH (SENIOR)', 'Nihal Ahsani (305)', 'Sayyed Anas (311)', 'Zainaba K. (302)')">3. Live Result Announcement</button>
+        <button class="ctrl-btn ctrl-btn-red" onclick="hideResult()">4. Back to Stage Monitor</button>
+    </div>
+
+    <script>
+        function updateStage(cat, event, chest, name) {
+            document.getElementById('resultOverlay').style.display = 'none';
+            document.getElementById('stageCard').style.display = 'block';
+
+            document.getElementById('lblCategory').innerText = cat + " CATEGORY";
+            document.getElementById('lblEventName').innerText = event;
+            document.getElementById('lblChestNo').innerText = chest;
+            document.getElementById('lblPartName').innerText = name;
+
+            // Simple fake mock queue shifting
+            let nextHtml = `
+                <div class="next-list-item">
+                    <div class="next-chest">CHEST NO: ${parseInt(chest)+2}</div>
+                    <div class="next-name">Sample Participant A</div>
+                </div>
+                <div class="next-list-item">
+                    <div class="next-chest">CHEST NO: ${parseInt(chest)+5}</div>
+                    <div class="next-name">Sample Participant B</div>
+                </div>
+            `;
+            document.getElementById('nextUpContainer').innerHTML = nextHtml;
+        }
+
+        function showFakeResult(title, w1, w2, w3) {
+            document.getElementById('stageCard').style.display = 'none';
+            document.getElementById('resultOverlay').style.display = 'block';
+
+            document.getElementById('lblResultTitle').innerHTML = `<i class="fa-solid fa-trophy"></i> WINNERS: ` + title;
+            document.getElementById('w1-name').innerText = w1.split('(')[0];
+            document.getElementById('w1-chest').innerText = "Chest No: " + w1.split('(')[1].replace(')','');
+
+            document.getElementById('w2-name').innerText = w2.split('(')[0];
+            document.getElementById('w2-chest').innerText = "Chest No: " + w2.split('(')[1].replace(')','');
+
+            document.getElementById('w3-name').innerText = w3.split('(')[0];
+            document.getElementById('w3-chest').innerText = "Chest No: " + w3.split('(')[1].replace(')','');
+        }
+
+        function hideResult() {
+            document.getElementById('resultOverlay').style.display = 'none';
+            document.getElementById('stageCard').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
