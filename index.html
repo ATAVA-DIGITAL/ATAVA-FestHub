@@ -122,7 +122,7 @@
         .admin-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-bottom: 25px; }
         @media(max-width: 1024px) { .admin-grid-3 { grid-template-columns: 1fr; } }
         
-        .card { background: #ffffff; padding: 22px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .card { background: #ffffff; padding: 22px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 25px; }
         .section-title { font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 0.95rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
@@ -134,16 +134,19 @@
         .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
         .btn-warning { background: #f59e0b; color: white; }
         
-        table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 10px; }
         th, td { padding: 14px 15px; border-bottom: 1px solid #e2e8f0; font-size: 1rem; text-align: left; }
         th { background: #f1f5f9; font-weight: 800; color: #475569; }
         td { font-weight: 600; }
         .score-input { width: 110px; padding: 10px; border: 2px solid #0284c7; border-radius: 6px; text-align: center; font-weight: 800; font-size: 1.1rem; background: #f0f9ff; color: #0369a1; }
         .score-input:focus { background: #fff; outline: 3px solid #38bdf8; }
 
+        .mini-table { font-size: 0.9rem; }
+        .mini-table th, .mini-table td { padding: 8px 10px; }
+
         /* JUDGES PANEL THEME */
         .bg-judge { background: #f1f5f9; }
-        .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
+        .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 166px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
         .judge-header { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
         .event-badge { background: #e0f2fe; color: #0369a1; padding: 12px; border-radius: 8px; text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; }
         .criteria-card { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
@@ -156,17 +159,29 @@
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* PRINT STYLE RULES */
+        /* 4-IN-1 A4 PRINT MATRIX SYSTEM STYLE RULES */
         @media print {
             body * { display: none !important; }
             #printArea, #printArea * { display: block !important; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; color: #000 !important; background: #fff !important; }
-            .print-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            .print-table th, .print-table td { border: 1px solid #000 !important; padding: 12px; font-size: 1.1rem; text-align: center; color: #000 !important; }
-            .print-table td.text-left { text-align: left; }
-            .print-header { text-align: center; margin-bottom: 25px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-            .print-signature { margin-top: 60px; display: flex; justify-content: space-between; padding: 0 20px; }
-            .print-sig-box { text-align: center; width: 200px; border-top: 1px dashed #000; padding-top: 5px; font-weight: bold; }
+            #printArea { 
+                position: absolute; left: 0; top: 0; width: 100%; 
+                display: grid !important; grid-template-columns: 1fr 1fr; 
+                gap: 15px; padding: 10px; background: #fff !important; 
+            }
+            .print-card-token { 
+                border: 2px dashed #000 !important; border-radius: 8px; 
+                padding: 12px; background: #fff !important; min-height: 48% !important;
+                display: flex !important; flex-direction: column; justify-content: space-between;
+                page-break-inside: avoid;
+            }
+            .print-header { text-align: center; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px; }
+            .print-header h1 { font-size: 1.2rem !important; margin: 0; font-weight: bold; color: #000 !important; }
+            .print-header p { font-size: 0.8rem !important; margin: 2px 0 0 0; color: #000 !important; }
+            .info-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
+            .print-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+            .print-table th, .print-table td { border: 1px solid #000 !important; padding: 6px; font-size: 0.85rem; text-align: center; color: #000 !important; }
+            .print-signature { margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: bold; }
+            .sig-line { border-top: 1px dashed #000; width: 45%; text-align: center; padding-top: 3px; margin-top: 25px; }
         }
     </style>
 </head>
@@ -187,14 +202,14 @@
                     <h1>ATAVA <span>FestHub Manager</span></h1>
                     <p>Meelad Art Festival Management Hub</p>
                 </div>
-                <div style="font-weight: 800; color: #0369a1; background: #e0f2fe; padding: 8px 15px; border-radius: 20px;">
-                    <i class="fa-solid fa-print"></i> Paper Score Sheet Enabled
+                <div style="font-weight: 800; color: #15803d; background: #dcfce7; padding: 8px 15px; border-radius: 20px;">
+                    <i class="fa-solid fa-circle-check"></i> System Connected & Ready
                 </div>
             </header>
 
             <div class="admin-grid-3">
                 
-                <!-- Card A: Add Custom Programs -->
+                <!-- Card A: Add Custom Programs & View Added Events -->
                 <div class="card">
                     <div class="section-title"><i class="fa-solid fa-folder-plus"></i> A. Add New Event (പരിപാടികൾ)</div>
                     <form id="eventForm" onsubmit="addNewProgramItem(event)">
@@ -209,10 +224,27 @@
                         </div>
                         <div class="form-group">
                             <label>Event Name (മത്സര ഇനം)</label>
-                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Madh Song, Qirath">
+                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Burda, Madh Song, Qirath">
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fa-solid fa-plus"></i> Add Event</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 15px;"><i class="fa-solid fa-plus"></i> Add Event</button>
                     </form>
+
+                    <!-- Added Events List view -->
+                    <div style="font-weight: 800; font-size: 0.95rem; margin-top: 10px; color: #475569; border-top: 2px solid #f1f5f9; padding-top: 10px;">
+                        <i class="fa-solid fa-list-ol"></i> Added Events List (<span id="totalEventsCount">0</span>)
+                    </div>
+                    <div style="max-height: 180px; overflow-y: auto; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 6px;">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th>Event</th>
+                                    <th style="width: 40px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="miniEventTableBody"></tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- Card B: Participant Registration Form -->
@@ -242,7 +274,7 @@
                     <div class="section-title"><i class="fa-solid fa-bullhorn"></i> C. Live Stage Controller</div>
                     <div class="form-group">
                         <label>Select Active Event to Manage / Enter Score</label>
-                        <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions(); refreshAdminTable();">
+                        <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions(); refreshAdminTable(); syncPrintStudentDropdown();">
                             <!-- Populated Dynamically -->
                         </select>
                     </div>
@@ -260,11 +292,23 @@
                 </div>
             </div>
 
-            <!-- Full Screen Wide Score Grid Matrix -->
+            <!-- Full Screen Wide Score Grid Matrix & Printing Setup Selector -->
             <div class="card">
-                <div class="section-title" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <div class="section-title" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 2px solid #f1f5f9; padding-bottom: 12px;">
                     <span><i class="fa-solid fa-list-check"></i> D. Score Input Matrix</span>
-                    <button class="btn btn-warning" onclick="printJudgeScoreSheet()" style="background: #4f46e5; color: white;"><i class="fa-solid fa-print"></i> Print Judge Score Sheet</button>
+                    
+                    <!-- Advanced Print Selection Controls row -->
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: bold; display: block; color: #475569;">Select Particular Student</label>
+                            <select id="printStudentSelect" class="form-control" style="padding: 6px 12px; font-size: 0.9rem; width: 220px; height: auto;">
+                                <option value="all">-- All Students (മുഴുവൻ പേരും) --</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-warning" onclick="printJudgeScoreSheet()" style="background: #4f46e5; color: white; padding: 10px 15px; font-size: 0.9rem; margin-top: 15px;">
+                            <i class="fa-solid fa-print"></i> Print Score Sheet (A6 Size)
+                        </button>
+                    </div>
                 </div>
                 <div style="overflow-x: auto;">
                     <table>
@@ -273,7 +317,7 @@
                                 <th>Chest No</th>
                                 <th>Name</th>
                                 <th>Category Group & Event Item</th>
-                                <th style="width: 150px;">Score (പേപ്പർ മാർക്ക്)</th>
+                                <th style="width: 150px;">Score (മാർക്ക്)</th>
                                 <th style="width: 80px;">Actions</th>
                             </tr>
                         </thead>
@@ -286,31 +330,9 @@
         </div>
     </div>
 
-    <!-- HIDDEN PRINT TEMPLATE FOR JUDGES -->
+    <!-- 4-IN-1 MINI MATRIX PRINT AREA FOR JUDGES -->
     <div id="printArea" style="display: none;">
-        <div class="print-header">
-            <h1 style="font-size: 2.2rem; margin-bottom: 5px;">ATAVA FESTHUB 2026</h1>
-            <h3 id="printEventTitle" style="font-size: 1.4rem; letter-spacing: 1px;">JUDGES EVALUATION SCORE SHEET</h3>
-        </div>
-        <table class="print-table">
-            <thead>
-                <tr>
-                    <th style="width: 12%;">Chest No</th>
-                    <th style="width: 38%; text-align: left;">Participant Name</th>
-                    <th style="width: 12%;">Presentation (Max 40)</th>
-                    <th style="width: 12%;">Pronunciation (Max 30)</th>
-                    <th style="width: 12%;">Melody & Tone (Max 30)</th>
-                    <th style="width: 14%;">Total (Max 100)</th>
-                </tr>
-            </thead>
-            <tbody id="printTableBody">
-                <!-- Dynamically injected via JS print triggers -->
-            </tbody>
-        </table>
-        <div class="print-signature">
-            <div class="print-sig-box">Judge Signature</div>
-            <div class="print-sig-box">Verified By Clerk</div>
-        </div>
+        <!-- Injected via JavaScript dynamically -->
     </div>
 
     <!-- SECTION 2: LIVE EXTENDED LED SCREEN PANEL -->
@@ -370,7 +392,7 @@
         </div>
     </div>
 
-    <!-- SECTION 3: JUDGES MOBILE INTERACTION FRAME (BACKUP) -->
+    <!-- SECTION 3: JUDGES MOBILE INTERACTION INTERFACE -->
     <div id="judgeView" class="app-section bg-judge">
         <div class="judge-wrapper">
             <div class="judge-header">
@@ -394,11 +416,11 @@
                     <input type="number" id="jdgC1" class="score-box" min="0" max="40" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
                 <div class="input-row">
-                    <label style="font-weight:700;">2. Pronunciation / <b>ഉച്ചാരണം</b> (Max 30)</label>
+                    <label style="font-weight:700;">2. Pronunciation / ഉച്ചാരണം (Max 30)</label>
                     <input type="number" id="jdgC2" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
                 <div class="input-row">
-                    <label style="font-weight:700;">3. Melody & Tone / <b>ശബ്ദം</b> (Max 30)</label>
+                    <label style="font-weight:700;">3. Melody & Tone / ശബ്ദം (Max 30)</label>
                     <input type="number" id="jdgC3" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
             </div>
@@ -434,6 +456,7 @@
             syncStageOptions();
             refreshAdminTable();
             updateLiveLEDQueue();
+            syncPrintStudentDropdown();
         }
 
         function addNewProgramItem(e) {
@@ -448,15 +471,56 @@
 
             programList.push({ category: cat, name: name });
             localStorage.setItem('atava_master_programs', JSON.stringify(programList));
-            document.getElementById('evtForm').reset();
+            document.getElementById('eventForm').reset();
             populateDropdowns();
+            refreshMiniEventTable();
             alert('പുതിയ മത്സരം വിജയകരമായി ആഡ് ചെയ്തു!');
+        }
+
+        function deleteProgramItem(index) {
+            const prog = programList[index];
+            const progTitle = `[${prog.category}] ${prog.name}`;
+            
+            // Check if any student registered under this profile
+            if(dataset.some(s => s.allocation === progTitle)) {
+                alert('ഈ പരിപാടിയിൽ കുട്ടികൾ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്! അതിനാൽ ഇത് ഡിലീറ്റ് ചെയ്യാൻ സാധിക്കില്ല.');
+                return;
+            }
+
+            if(confirm(`"${prog.name}" എന്ന മത്സരം ലിസ്റ്റിൽ നിന്നും നീക്കം ചെയ്യണോ?`)) {
+                programList.splice(index, 1);
+                localStorage.setItem('atava_master_programs', JSON.stringify(programList));
+                populateDropdowns();
+                refreshMiniEventTable();
+            }
+        }
+
+        function refreshMiniEventTable() {
+            const tbody = document.getElementById('miniEventTableBody');
+            document.getElementById('totalEventsCount').innerText = programList.length;
+            tbody.innerHTML = '';
+
+            if(programList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No events added.</td></tr>`;
+                return;
+            }
+
+            programList.forEach((p, idx) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="font-size:0.85rem; color:#475569;">${p.category}</td>
+                        <td style="color:#0f172a; font-weight:700;">${p.name}</td>
+                        <td style="text-align:center;">
+                            <button class="btn btn-danger" style="padding:3px 6px; font-size:0.75rem;" onclick="deleteProgramItem(${idx})"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
         function populateDropdowns() {
             const regSelect = document.getElementById('admEventSelect');
             const filterSelect = document.getElementById('ctrlEventFilter');
-            
             const currentFilterVal = filterSelect.value;
             
             regSelect.innerHTML = '';
@@ -472,6 +536,18 @@
                 filterSelect.value = currentFilterVal;
             }
             syncStageOptions();
+            syncPrintStudentDropdown();
+        }
+
+        function syncPrintStudentDropdown() {
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
+            const printStudentSelect = document.getElementById('printStudentSelect');
+            printStudentSelect.innerHTML = '<option value="all">-- All Students (മുഴുവൻ പേരും) --</option>';
+
+            const filteredData = dataset.filter(p => p.allocation === currentFilter);
+            filteredData.forEach(p => {
+                printStudentSelect.innerHTML += `<option value="${p.chest}">${p.chest} - ${p.name}</option>`;
+            });
         }
 
         function saveNewParticipant(e) {
@@ -490,6 +566,7 @@
             document.getElementById('regForm').reset();
             refreshAdminTable();
             syncStageOptions();
+            syncPrintStudentDropdown();
         }
 
         function deleteParticipantRecord(chestNo) {
@@ -498,6 +575,7 @@
                 saveToMemory();
                 refreshAdminTable();
                 syncStageOptions();
+                syncPrintStudentDropdown();
             }
         }
 
@@ -544,27 +622,72 @@
 
         function printJudgeScoreSheet() {
             const currentFilter = document.getElementById('ctrlEventFilter').value;
-            const filteredData = dataset.filter(p => p.allocation === currentFilter);
+            const printTarget = document.getElementById('printStudentSelect').value;
             
-            if(filteredData.length === 0) {
-                alert('ഈ മത്സരത്തിൽ കുട്ടികളാരും രജിസ്റ്റർ ചെയ്തിട്ടില്ല! പ്രിന്റ് ചെയ്യാൻ സാധിക്കില്ല.');
+            let targetsToPrint = dataset.filter(p => p.allocation === currentFilter);
+            
+            if(printTarget !== 'all') {
+                targetsToPrint = targetsToPrint.filter(p => p.chest === printTarget);
+            }
+            
+            if(targetsToPrint.length === 0) {
+                alert('പ്രിന്റ് ചെയ്യാൻ കുട്ടികളാരും ഈ പരിപാടിയിൽ ഇല്ല!');
                 return;
             }
 
-            document.getElementById('printEventTitle').innerText = `EVALUATION SHEET: ${currentFilter.toUpperCase()}`;
-            const printTbody = document.getElementById('printTableBody');
-            printTbody.innerHTML = '';
+            const printArea = document.getElementById('printArea');
+            printArea.innerHTML = '';
 
-            filteredData.forEach(p => {
-                printTbody.innerHTML += `
-                    <tr>
-                        <td style="font-weight:bold; font-size:1.2rem;">${p.chest}</td>
-                        <td class="text-left" style="font-size:1.2rem;">${p.name}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+            // Generate selective/all mini evaluation cards on matrix loop
+            targetsToPrint.forEach(p => {
+                printArea.innerHTML += `
+                    <div class="print-card-token">
+                        <div class="print-header">
+                            <h1>ATAVA FESTHUB 2026</h1>
+                            <p>JUDGE EVALUATION SCORE SLIP</p>
+                        </div>
+                        <div class="info-row">
+                            <div>CHEST NO: ${p.chest}</div>
+                        </div>
+                        <div style="font-size:0.85rem; font-weight:bold; margin-bottom:5px; border-bottom:1px solid #000; color:#000;">
+                            Name: ${p.name.toUpperCase()} <br> Item: ${currentFilter}
+                        </div>
+                        <table class="print-table">
+                            <thead>
+                                <tr>
+                                    <th>Criteria</th>
+                                    <th style="width:25%;">Max</th>
+                                    <th style="width:30%;">Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:left;">Presentation / ആലാപനം</td>
+                                    <td>40</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Pronunciation / ഉച്ചാരണം</td>
+                                    <td>30</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left;">Melody & Tone / ശബ്ദം</td>
+                                    <td>30</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:left; font-weight:bold;">TOTAL SCORE</td>
+                                    <td style="font-weight:bold;">100</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="print-signature">
+                            <div class="sig-line">Judge Signature</div>
+                            <div class="sig-line">Clerk Counter</div>
+                        </div>
+                    </div>
                 `;
             });
 
@@ -699,8 +822,10 @@
             }
         }
 
+        // Run Init Matrix engine methods
         populateDropdowns();
         refreshAdminTable();
+        refreshMiniEventTable();
     </script>
 </body>
 </html>
