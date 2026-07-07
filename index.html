@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATAVA FestHub - All-in-One Master Suite</title>
+    <title>ATAVA FestHub - Full Screen Master Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* Master Navigation Bar at top to switch views easily */
+        /* Full Screen Master Navigation */
         .master-nav {
             background: #0f172a;
-            padding: 10px 20px;
+            padding: 12px 20px;
             display: flex;
             gap: 15px;
             justify-content: center;
@@ -21,11 +21,11 @@
             background: #334155;
             color: #f8fafc;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-weight: 800;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 1rem;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -34,35 +34,34 @@
         .nav-btn:hover { background: #475569; }
         .nav-btn.active { background: #0284c7; color: white; }
 
-        .app-section { display: none; padding: 20px; min-height: calc(100vh - 65px); }
+        .app-section { display: none; padding: 25px; min-height: calc(100vh - 70px); }
         .app-section.active { display: block; }
 
         /* ==========================================
-           1. DASHBOARD THEME & STYLES (DARK/LED STYLE)
+           1. LED DISPLAY BOARD THEME (FULL SCREEN)
            ========================================== */
         .bg-dashboard {
             background: radial-gradient(circle at center, #0f2b1d 0%, #05140e 100%);
             color: #ffffff;
-            padding: 25px;
+            padding: 20px;
         }
         .dashboard-container {
             border: 5px solid #10b981;
             box-shadow: 0 0 35px rgba(16, 185, 129, 0.4), inset 0 0 25px rgba(16, 185, 129, 0.3);
             border-radius: 20px;
             background: rgba(10, 25, 18, 0.9);
-            max-width: 1500px;
-            width: 100%;
+            width: 100%; /* Full screen span */
             margin: auto;
-            padding: 35px;
+            padding: 30px;
         }
         .main-header {
             text-align: center;
             border-bottom: 3px dashed rgba(16, 185, 129, 0.4);
             padding-bottom: 20px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
         .main-header h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             letter-spacing: 3px;
             color: #ffeb3b;
             text-shadow: 0 0 15px rgba(255, 235, 59, 0.6);
@@ -70,96 +69,95 @@
         }
         .main-header p {
             color: #a7f3d0;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-top: 8px;
             font-weight: 700;
         }
-        .main-layout { display: table; width: 100%; border-collapse: separate; border-spacing: 25px 0; }
-        .main-col-left { display: table-cell; width: 70%; vertical-align: top; }
-        .main-col-right { display: table-cell; width: 30%; vertical-align: top; }
+        
+        .main-layout { display: flex; gap: 25px; width: 100%; }
+        .main-col-left { flex: 7; }
+        .main-col-right { flex: 3; }
         
         .stage-card {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.25) 100%);
             border: 3px solid #047857;
             border-radius: 16px;
-            padding: 45px 30px;
+            padding: 60px 40px;
             text-align: center;
             position: relative;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
         .live-badge {
             position: absolute; top: 20px; left: 20px; background: #ef4444; color: white;
-            padding: 6px 18px; border-radius: 25px; font-weight: 800; font-size: 1rem;
-            animation: blink 1.2s infinite; box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
+            padding: 6px 18px; border-radius: 25px; font-weight: 800; font-size: 1.1rem;
+            animation: blink 1.2s infinite;
         }
-        .item-category { font-size: 1.8rem; color: #34d399; font-weight: 800; margin-bottom: 15px; }
-        .current-item { font-size: 4rem; color: #ffffff; font-weight: 900; margin-bottom: 25px; text-shadow: 0 3px 8px rgba(0,0,0,0.6); }
-        .on-stage-box { background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 30px; display: inline-block; min-width: 85%; border-left: 8px solid #ffeb3b; }
-        .chest-num { font-size: 2.2rem; color: #ffeb3b; font-weight: 900; }
-        .participant-name { font-size: 3.5rem; color: #ffffff; font-weight: 800; margin-top: 10px; }
+        .item-category { font-size: 2.2rem; color: #34d399; font-weight: 800; margin-bottom: 15px; }
+        .current-item { font-size: 4.5rem; color: #ffffff; font-weight: 900; margin-bottom: 25px; }
+        .on-stage-box { background: rgba(0, 0, 0, 0.6); border-radius: 12px; padding: 40px; display: inline-block; width: 90%; border-left: 10px solid #ffeb3b; }
+        .chest-num { font-size: 2.8rem; color: #ffeb3b; font-weight: 900; }
+        .participant-name { font-size: 4.2rem; color: #ffffff; font-weight: 800; margin-top: 10px; }
 
-        .sidebar-panel { background: rgba(15, 32, 24, 0.85); border: 3px solid #115e59; border-radius: 16px; padding: 25px; min-height: 100%; }
-        .sidebar-title { font-size: 1.6rem; color: #38bdf8; font-weight: 900; margin-bottom: 20px; border-bottom: 3px solid #115e59; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .next-list-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 18px 20px; margin-bottom: 15px; }
-        .next-chest { color: #38bdf8; font-weight: 900; font-size: 1.2rem; }
-        .next-name { font-size: 1.8rem; font-weight: 800; color: #f1f5f9; margin-top: 4px; }
+        .sidebar-panel { background: rgba(15, 32, 24, 0.85); border: 3px solid #115e59; border-radius: 16px; padding: 25px; height: 100%; }
+        .sidebar-title { font-size: 1.8rem; color: #38bdf8; font-weight: 900; margin-bottom: 20px; border-bottom: 3px solid #115e59; padding-bottom: 10px; }
+        .next-list-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 20px; margin-bottom: 15px; }
+        .next-chest { color: #38bdf8; font-weight: 900; font-size: 1.4rem; }
+        .next-name { font-size: 2rem; font-weight: 800; color: #f1f5f9; margin-top: 4px; }
 
-        .result-overlay { display: none; background: linear-gradient(to bottom, rgba(15,23,42,0.98), rgba(6,78,59,0.98)); border: 4px solid #ffd700; border-radius: 16px; padding: 35px; text-align: center; margin-top: 25px; }
-        .result-title { color: #ffd700; font-size: 2.8rem; font-weight: 900; margin-bottom: 25px; text-shadow: 0 0 20px rgba(255,215,0,0.5); }
-        .winners-row { display: table; width: 100%; table-layout: fixed; margin-top: 20px; }
-        .winner-position-cell { display: table-cell; vertical-align: bottom; padding: 12px; }
-        .winner-podium { background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 15px; }
-        .podium-1 { border-color: #ffd700; background: linear-gradient(to top, rgba(255,215,0,0.15), rgba(0,0,0,0.5)); }
-        .podium-2 { border-color: #c0c0c0; background: linear-gradient(to top, rgba(192,192,192,0.15), rgba(0,0,0,0.5)); }
-        .podium-3 { border-color: #cd7f32; background: linear-gradient(to top, rgba(205,127,50,0.15), rgba(0,0,0,0.5)); }
-        .cup-icon { font-size: 3.5rem; margin-bottom: 12px; }
+        .result-overlay { display: none; background: linear-gradient(to bottom, rgba(15,23,42,0.98), rgba(6,78,59,0.98)); border: 4px solid #ffd700; border-radius: 16px; padding: 40px; text-align: center; }
+        .result-title { color: #ffd700; font-size: 3.2rem; font-weight: 900; margin-bottom: 30px; text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+        .winners-row { display: flex; gap: 20px; justify-content: center; align-items: flex-end; margin-top: 20px; }
+        .winner-podium { background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 30px 20px; flex: 1; text-align: center; }
+        .podium-1 { border-color: #ffd700; order: 2; padding: 50px 20px; }
+        .podium-2 { border-color: #c0c0c0; order: 1; }
+        .podium-3 { border-color: #cd7f32; order: 3; }
+        .cup-icon { font-size: 4rem; margin-bottom: 12px; }
         .cup-1 { color: #ffd700; } .cup-2 { color: #c0c0c0; } .cup-3 { color: #cd7f32; }
-        .winner-place-text { font-weight: 900; font-size: 1.3rem; margin-bottom: 8px; }
-        .w-name { font-size: 2rem; font-weight: 800; color: #ffffff; }
-        .w-chest { color: #a7f3d0; font-weight: 700; font-size: 1.2rem; margin-top: 5px; }
+        .w-name { font-size: 2.2rem; font-weight: 800; color: #ffffff; }
+        .w-chest { color: #a7f3d0; font-weight: 700; font-size: 1.4rem; margin-top: 5px; }
 
         /* ==========================================
-           2. ADMIN PANEL THEME & STYLES (LIGHT/WHITE STYLE)
+           2. ADMIN PANEL THEME (FULL SCREEN LIGHT)
            ========================================== */
-        .bg-admin { background: #f8fafc; color: #1e293b; padding: 20px; }
-        .admin-container { max-width: 1300px; margin: auto; }
+        .bg-admin { background: #f8fafc; color: #1e293b; }
+        .admin-container { width: 100%; max-width: 100%; margin: auto; }
         .admin-header { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid #0284c7; display: flex; justify-content: space-between; align-items: center; }
-        .admin-header h1 { font-size: 1.8rem; color: #0284c7; font-weight: 900; }
-        .config-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
-        .card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
-        .section-title { font-size: 1.2rem; font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .admin-header h1 { font-size: 2rem; color: #0284c7; font-weight: 900; }
+        
+        .admin-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+        @media(max-width: 1024px) { .admin-grid-3 { grid-template-columns: 1fr; } }
+        
+        .card { background: #ffffff; padding: 22px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .section-title { font-size: 1.25rem; font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; font-weight: 600; }
-        .radio-group { display: flex; gap: 20px; }
-        .radio-option { display: flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; }
-        .btn { padding: 12px 20px; border: none; border-radius: 6px; font-weight: 800; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .form-group label { display: block; font-size: 0.95rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; font-weight: 600; background: #fff; }
+        
+        .btn { padding: 12px 20px; border: none; border-radius: 6px; font-weight: 800; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
         .btn-primary { background: #0284c7; color: white; }
         .btn-success { background: #10b981; color: white; }
         .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
         .btn-warning { background: #f59e0b; color: white; }
         
         table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
-        th, td { padding: 14px 15px; border-bottom: 1px solid #e2e8f0; font-size: 0.95rem; }
+        th, td { padding: 14px 15px; border-bottom: 1px solid #e2e8f0; font-size: 1rem; text-align: left; }
         th { background: #f1f5f9; font-weight: 800; color: #475569; }
         td { font-weight: 600; }
-        .score-input { width: 70px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 700; }
+        .score-input { width: 80px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 700; font-size: 1rem; }
 
         /* ==========================================
-           3. JUDGES PANEL THEME & STYLES (LIGHT/WHITE STYLE)
+           3. JUDGES PANEL THEME
            ========================================== */
-        .bg-judge { background: #f1f5f9; padding: 20px; }
+        .bg-judge { background: #f1f5f9; }
         .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
         .judge-header { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
         .event-badge { background: #e0f2fe; color: #0369a1; padding: 12px; border-radius: 8px; text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; }
         .criteria-card { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
         .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
-        .input-row label { font-size: 0.95rem; font-weight: 700; color: #334155; }
         .score-box { width: 90px; padding: 10px; font-size: 1.2rem; font-weight: 800; text-align: center; border: 2px solid #cbd5e1; border-radius: 8px; }
         .total-display { background: #d1e7dd; color: #0f5132; padding: 15px; border-radius: 10px; text-align: center; font-size: 1.4rem; font-weight: 900; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
 
-        .footer-text { text-align: center; margin-top: 30px; font-size: 0.9rem; color: #64748b; font-weight: 700; }
+        .footer-text { text-align: center; margin-top: 30px; font-size: 0.95rem; color: #64748b; font-weight: 700; border-top: 1px solid #e2e8f0; padding-top: 15px; }
         .footer-text span { color: #0284c7; font-weight: 900; }
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
@@ -185,87 +183,79 @@
                 </div>
             </header>
 
-            <div class="config-card">
-                <div class="section-title"><i class="fa-solid fa-sliders"></i> 1. Category Settings</div>
-                <div class="form-group">
-                    <label>Choose Category Basis</label>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="catType" value="class" checked onchange="handleCatModeChange()"> Class Wise (1 to 12)
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="catType" value="age" onchange="handleCatModeChange()"> Age Group (Sub Junior, Junior, etc)
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-2">
+            <div class="admin-grid-3">
+                
                 <div class="card">
-                    <div class="section-title"><i class="fa-solid fa-user-plus"></i> 2. Participant Registration</div>
+                    <div class="section-title"><i class="fa-solid fa-folder-plus"></i> A. Add New Event (പരിപാടികൾ)</div>
+                    <form id="eventForm" onsubmit="addNewProgramItem(event)">
+                        <div class="form-group">
+                            <label>Category Group</label>
+                            <select id="evtCategory" class="form-control">
+                                <option value="Sub Junior (U-11)">Sub Junior (U-11)</option>
+                                <option value="Junior (U-14)">Junior (U-14)</option>
+                                <option value="Senior (U-17)">Senior (U-17)</option>
+                                <option value="General">General</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Name (മത്സര ഇനം)</label>
+                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Madh Song, Qirath">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;"><i class="fa-solid fa-plus"></i> Add Event</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="section-title"><i class="fa-solid fa-user-plus"></i> B. Participant Registration</div>
                     <form id="regForm" onsubmit="saveNewParticipant(event)">
                         <div class="form-group">
                             <label>Student Name</label>
-                            <input type="text" id="admName" class="form-control" required placeholder="Enter student full name">
+                            <input type="text" id="admName" class="form-control" required placeholder="Enter full name">
                         </div>
                         <div class="form-group">
                             <label>Chest Number</label>
                             <input type="number" id="admChest" class="form-control" required placeholder="Enter Chest No">
                         </div>
                         <div class="form-group">
-                            <label id="admCatLabel">Class</label>
-                            <select id="admCategory" class="form-control"></select>
+                            <label>Select Category & Event</label>
+                            <select id="admEventSelect" class="form-control" required>
+                                </select>
                         </div>
-                        <div class="form-group">
-                            <label>Event Item</label>
-                            <select id="admEvent" class="form-control">
-                                <option value="Madh Song">Madh Song (മദ്ഹ് ഗാനം)</option>
-                                <option value="Qirath">Qirath (ഖിറാഅത്ത്)</option>
-                                <option value="Speech">Speech (പ്രസംഗം)</option>
-                                <option value="Daff Mutt">Daff Mutt (ദഫ് മുട്ട്)</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Add Participant</button>
+                        <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center;"><i class="fa-solid fa-user-check"></i> Register Student</button>
                     </form>
                 </div>
 
                 <div class="card">
-                    <div class="section-title"><i class="fa-solid fa-bullhorn"></i> 3. Live Stage Controller</div>
-                    <p style="font-size: 0.9rem; color: #64748b; font-weight: 600; margin-bottom: 15px;">
-                        Control what items are shown live on the stage LED screen projection window.
-                    </p>
+                    <div class="section-title"><i class="fa-solid fa-bullhorn"></i> C. Live Stage Controller</div>
                     <div class="form-group">
-                        <label>Active Event Group</label>
+                        <label>Select Active Event to Manage</label>
                         <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions()">
-                            <option value="Madh Song">Madh Song (മദ്ഹ് ഗാനം)</option>
-                            <option value="Qirath">Qirath (ഖിറാഅത്ത്)</option>
-                            <option value="Speech">Speech (പ്രസംഗം)</option>
-                            <option value="Daff Mutt">Daff Mutt (ദഫ് മുട്ട്)</option>
-                        </select>
+                            </select>
                     </div>
                     <div class="form-group">
-                        <label>Select Current On-Stage Student</label>
+                        <label>Select Student On Stage</label>
                         <select id="ctrlOnStageStudent" class="form-control"></select>
                     </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn btn-success" onclick="pushToLiveStage()"><i class="fa-solid fa-play"></i> Push to LED Screen</button>
-                        <button class="btn btn-warning" onclick="triggerLiveResultAnnouncement()"><i class="fa-solid fa-trophy"></i> Announce Results</button>
-                        <button class="btn btn-danger" onclick="clearResultOverlay()"><i class="fa-solid fa-circle-xmark"></i> Stop Result</button>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <button class="btn btn-primary" style="justify-content: center;" onclick="pushToLiveStage()"><i class="fa-solid fa-play"></i> Push to LED Screen</button>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn btn-warning" style="flex: 1; justify-content: center;" onclick="triggerLiveResultAnnouncement()"><i class="fa-solid fa-trophy"></i> Results</button>
+                            <button class="btn btn-danger" style="flex: 1; justify-content: center;" onclick="clearResultOverlay()"><i class="fa-solid fa-eye-slash"></i> Clear Result</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card">
-                <div class="section-title"><i class="fa-solid fa-list-check"></i> 4. Score Sheets & Hybrid Data Matrix</div>
+                <div class="section-title"><i class="fa-solid fa-list-check"></i> D. Score Sheets & Hybrid Data Matrix</div>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead>
                             <tr>
                                 <th>Chest No</th>
                                 <th>Name</th>
-                                <th>Category</th>
-                                <th>Event Item</th>
-                                <th>Score</th>
+                                <th>Category Group & Event Item</th>
+                                <th>Score (മാർക്ക്)</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -274,7 +264,7 @@
                 </div>
             </div>
             
-            <div class="footer-text">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
+            <div class="footer-text">POWERED BY <span>ATAVA DIGITAL SERVICES & TRADING</span></div>
         </div>
     </div>
 
@@ -289,41 +279,35 @@
                 <div class="main-col-left">
                     <div class="stage-card" id="ledStageCard">
                         <div class="live-badge"><i class="fa-solid fa-circle"></i> LIVE STAGE</div>
-                        <div class="item-category" id="ledCategory">JUNIOR CATEGORY</div>
-                        <div class="current-item" id="ledEventName">MADH SONG (മദ്ഹ് ഗാനം)</div>
+                        <div class="item-category" id="ledCategory">CHOOSE EVENT GROUP</div>
+                        <div class="current-item" id="ledEventName">Waiting For Admin Sync</div>
                         
                         <div class="on-stage-box">
                             <div class="chest-num"><i class="fa-solid fa-id-card"></i> CHEST NO: <span id="ledChestNo">---</span></div>
-                            <div class="participant-name" id="ledPartName">Waiting for sync...</div>
+                            <div class="participant-name" id="ledPartName">Stage Vacant</div>
                         </div>
                     </div>
 
                     <div class="result-overlay" id="ledResultOverlay">
                         <div class="result-title" id="ledResultTitle"><i class="fa-solid fa-trophy"></i> WINNERS DECLARATION</div>
                         <div class="winners-row">
-                            <div class="winner-position-cell">
-                                <div class="winner-podium podium-2">
-                                    <div class="cup-icon cup-2"><i class="fa-solid fa-trophy"></i></div>
-                                    <div class="winner-place-text" style="color: #cbd5e1;">2nd Place</div>
-                                    <div class="w-name" id="w2-name">---</div>
-                                    <div class="w-chest" id="w2-chest">Chest: --</div>
-                                </div>
+                            <div class="winner-podium podium-2">
+                                <div class="cup-icon cup-2"><i class="fa-solid fa-trophy"></i></div>
+                                <div style="font-weight:900; font-size:1.3rem; margin-bottom:8px; color:#cbd5e1;">2nd Place</div>
+                                <div class="w-name" id="w2-name">---</div>
+                                <div class="w-chest" id="w2-chest">Chest: --</div>
                             </div>
-                            <div class="winner-position-cell">
-                                <div class="winner-podium podium-1">
-                                    <div class="cup-icon cup-1"><i class="fa-solid fa-crown"></i></div>
-                                    <div class="winner-place-text" style="color: #ffd700;">1st Place / WINNER</div>
-                                    <div class="w-name" id="w1-name">---</div>
-                                    <div class="w-chest" id="w1-chest">Chest: --</div>
-                                </div>
+                            <div class="winner-podium podium-1">
+                                <div class="cup-icon cup-1"><i class="fa-solid fa-crown"></i></div>
+                                <div style="font-weight:900; font-size:1.5rem; margin-bottom:8px; color:#ffd700;">1st Place</div>
+                                <div class="w-name" id="w1-name">---</div>
+                                <div class="w-chest" id="w1-chest">Chest: --</div>
                             </div>
-                            <div class="winner-position-cell">
-                                <div class="winner-podium podium-3">
-                                    <div class="cup-icon cup-3"><i class="fa-solid fa-trophy"></i></div>
-                                    <div class="winner-place-text" style="color: #cd7f32;">3rd Place</div>
-                                    <div class="w-name" id="w3-name">---</div>
-                                    <div class="w-chest" id="w3-chest">Chest: --</div>
-                                </div>
+                            <div class="winner-podium podium-3">
+                                <div class="cup-icon cup-3"><i class="fa-solid fa-trophy"></i></div>
+                                <div style="font-weight:900; font-size:1.3rem; margin-bottom:8px; color:#cd7f32;">3rd Place</div>
+                                <div class="w-name" id="w3-name">---</div>
+                                <div class="w-chest" id="w3-chest">Chest: --</div>
                             </div>
                         </div>
                     </div>
@@ -336,7 +320,7 @@
                     </div>
                 </div>
             </div>
-            <div class="footer-text" style="color: #475569;">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
+            <div class="footer-text" style="color: #475569; border:none;">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
         </div>
     </div>
 
@@ -347,34 +331,27 @@
                 <p>Official Evaluation Interface (Judges View)</p>
             </div>
 
-            <div class="event-badge" id="jdgActiveItemBadge">
-                <i class="fa-solid fa-microphone-lines"></i> Sync from Admin Panel
-            </div>
+            <div class="event-badge" id="jdgActiveItemBadge">Sync Event From Admin Controller</div>
 
             <div class="form-group">
-                <label style="font-weight: 800; color: #334155;"><i class="fa-solid fa-user-check"></i> Choose Chest Number</label>
-                <select id="jdgStudentSelector" class="form-control" style="font-size: 1.1rem; font-weight: 700; height: auto; padding: 12px;" onchange="syncJudgeSelectedDetails()">
-                    <option value="">-- Choose active candidate --</option>
-                </select>
+                <label style="font-weight: 800; color: #334155;"><i class="fa-solid fa-user-check"></i> Select Active Candidate</label>
+                <select id="jdgStudentSelector" class="form-control" style="font-size: 1.1rem; font-weight: 700; padding: 12px; height:auto;"></select>
             </div>
 
             <div class="criteria-card">
                 <div style="font-size: 1rem; font-weight: 800; color: #475569; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
                     Criteria Score Sheets (Max 100 Points)
                 </div>
-                
                 <div class="input-row">
-                    <label>1. Presentation / ആലാപനം (Max 40)</label>
+                    <label style="font-weight:700;">1. Presentation / ആലാപനം (Max 40)</label>
                     <input type="number" id="jdgC1" class="score-box" min="0" max="40" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
-
                 <div class="input-row">
-                    <label>2. Pronunciation / ഉച്ചാരണം (Max 30)</label>
+                    <label style="font-weight:700;">2. Pronunciation / ഉച്ചാരണം (Max 30)</label>
                     <input type="number" id="jdgC2" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
-
                 <div class="input-row">
-                    <label>3. Melody & Tone / ശബ്ദം (Max 30)</label>
+                    <label style="font-weight:700;">3. Melody & Tone / ശബ്ദം (Max 30)</label>
                     <input type="number" id="jdgC3" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
                 </div>
             </div>
@@ -393,63 +370,88 @@
     </div>
 
     <script>
-        // Global Data Store Syncing with LocalStorage
-        let dataset = JSON.parse(localStorage.getItem('atava_festhub_master')) || [];
-        
-        const masterClasses = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'];
-        const masterAges = ['Sub Junior (U-11)', 'Junior (U-14)', 'Senior (U-17)', 'General'];
+        // Memory Initialization
+        let dataset = JSON.parse(localStorage.getItem('atava_master_students')) || [];
+        let programList = JSON.parse(localStorage.getItem('atava_master_programs')) || [
+            { category: 'Sub Junior (U-11)', name: 'Madh Song (മദ്ഹ് ഗാനം)' },
+            { category: 'Junior (U-14)', name: 'Qirath (ഖിറാഅത്ത്)' },
+            { category: 'Senior (U-17)', name: 'Speech (പ്രസംഗം)' }
+        ];
 
         function switchView(viewId, element) {
             document.querySelectorAll('.app-section').forEach(section => section.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            
             document.getElementById(viewId).classList.add('active');
             element.classList.add('active');
             
-            // Sync all dropboxes and variables when changing layouts
             syncStageOptions();
             refreshAdminTable();
             updateLiveLEDQueue();
         }
 
-        function handleCatModeChange() {
-            const mode = document.querySelector('input[name="catType"]:checked').value;
-            const select = document.getElementById('admCategory');
-            const label = document.getElementById('admCatLabel');
-            
-            select.innerHTML = '';
-            if(mode === 'class') {
-                label.innerText = "Class Level (മദ്രസ ക്ലാസ്)";
-                masterClasses.forEach(c => select.innerHTML += `<option value="${c}">${c}</option>`);
-            } else {
-                label.innerText = "Age Category (പ്രായ വിഭാഗം)";
-                masterAges.forEach(a => select.innerHTML += `<option value="${a}">${a}</option>`);
+        // Add Custom Program Logic
+        function addNewProgramItem(e) {
+            e.preventDefault();
+            const cat = document.getElementById('evtCategory').value;
+            const name = document.getElementById('evtName').value.trim();
+
+            if(programList.some(p => p.category === cat && p.name.toLowerCase() === name.toLowerCase())) {
+                alert('ഈ പരിപാടി ഈ കാറ്റഗറിയിൽ നിലവിലുണ്ട്!');
+                return;
             }
+
+            programList.push({ category: cat, name: name });
+            localStorage.setItem('atava_master_programs', JSON.stringify(programList));
+            document.getElementById('evtForm').reset();
+            populateDropdowns();
+            alert('പുതിയ മത്സരം വിജയകരമായി ആഡ് ചെയ്തു!');
         }
 
+        // Dynamic Dropdown Synchronization Engine
+        function populateDropdowns() {
+            const regSelect = document.getElementById('admEventSelect');
+            const filterSelect = document.getElementById('ctrlEventFilter');
+            
+            const currentFilterVal = filterSelect.value;
+            
+            regSelect.innerHTML = '';
+            filterSelect.innerHTML = '';
+
+            programList.forEach(p => {
+                const valueStr = `[${p.category}] ${p.name}`;
+                regSelect.innerHTML += `<option value="${valueStr}">${valueStr}</option>`;
+                filterSelect.innerHTML += `<option value="${valueStr}">${valueStr}</option>`;
+            });
+
+            if(currentFilterVal && programList.some(p => `[${p.category}] ${p.name}` === currentFilterVal)) {
+                filterSelect.value = currentFilterVal;
+            }
+            syncStageOptions();
+        }
+
+        // Student Data Flow
         function saveNewParticipant(e) {
             e.preventDefault();
             const name = document.getElementById('admName').value.trim();
             const chest = document.getElementById('admChest').value.trim();
-            const cat = document.getElementById('admCategory').value;
-            const eventItem = document.getElementById('admEvent').value;
+            const allocation = document.getElementById('admEventSelect').value;
 
             if(dataset.some(p => p.chest === chest)) {
-                alert('ഈ ചെസ്റ്റ് നമ്പർ മുൻപ് രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട് (Chest number already allocated)!');
+                alert('ഈ ചെസ്റ്റ് നമ്പർ മുൻപ് ആർക്കോ നൽകിയിട്ടുണ്ട്!');
                 return;
             }
 
-            dataset.push({ chest, name, cat, eventItem, score: '' });
-            commitData();
+            dataset.push({ chest, name, allocation, score: '' });
+            saveToMemory();
             document.getElementById('regForm').reset();
             refreshAdminTable();
             syncStageOptions();
         }
 
         function deleteParticipantRecord(index) {
-            if(confirm('ഈ കുട്ടിയുടെ രജിസ്ട്രേഷൻ ഒഴിവാക്കണോ?')) {
+            if(confirm('ഈ മത്സരാർത്ഥിയെ സിസ്റ്റത്തിൽ നിന്നും നീക്കം ചെയ്യണോ?')) {
                 dataset.splice(index, 1);
-                commitData();
+                saveToMemory();
                 refreshAdminTable();
                 syncStageOptions();
             }
@@ -457,11 +459,11 @@
 
         function handleDirectScoreEdit(index, value) {
             dataset[index].score = value;
-            localStorage.setItem('atava_festhub_master', JSON.stringify(dataset));
+            localStorage.setItem('atava_master_students', JSON.stringify(dataset));
         }
 
-        function commitData() {
-            localStorage.setItem('atava_festhub_master', JSON.stringify(dataset));
+        function saveToMemory() {
+            localStorage.setItem('atava_master_students', JSON.stringify(dataset));
         }
 
         function refreshAdminTable() {
@@ -469,17 +471,16 @@
             tbody.innerHTML = '';
 
             if(dataset.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94a3b8;">No records saved yet. Fill out the form above!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No records allocated yet. Register students above!</td></tr>`;
                 return;
             }
 
             dataset.forEach((p, index) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td style="color:#0284c7; font-weight:800;">${p.chest}</td>
-                        <td>${p.name}</td>
-                        <td><span style="background:#f1f5f9; padding:4px 8px; border-radius:4px;">${p.cat}</span></td>
-                        <td>${p.eventItem}</td>
+                        <td style="color:#0284c7; font-weight:800; font-size:1.1rem;">${p.chest}</td>
+                        <td style="font-size:1.05rem;">${p.name}</td>
+                        <td><span style="background:#e2e8f0; padding:5px 10px; border-radius:6px; font-size:0.9rem;">${p.allocation}</span></td>
                         <td>
                             <input type="number" class="score-input" value="${p.score}" min="0" max="100" oninput="handleDirectScoreEdit(${index}, this.value)" placeholder="0">
                         </td>
@@ -492,26 +493,27 @@
         }
 
         function syncStageOptions() {
-            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
             const stageSelect = document.getElementById('ctrlOnStageStudent');
             const judgeSelect = document.getElementById('jdgStudentSelector');
             
-            document.getElementById('jdgActiveItemBadge').innerHTML = `<i class="fa-solid fa-microphone-lines"></i> ${filterEvent.toUpperCase()}`;
+            document.getElementById('jdgActiveItemBadge').innerHTML = `<i class="fa-solid fa-microphone-lines"></i> ${currentFilter.toUpperCase()}`;
             
-            stageSelect.innerHTML = '<option value="">-- Choose Candidate --</option>';
-            judgeSelect.innerHTML = '<option value="">-- Choose Candidate --</option>';
+            stageSelect.innerHTML = '<option value="">-- Select Student --</option>';
+            judgeSelect.innerHTML = '<option value="">-- Select Student --</option>';
             
-            const filtered = dataset.filter(p => p.eventItem === filterEvent);
+            const filtered = dataset.filter(p => p.allocation === currentFilter);
             filtered.forEach(p => {
-                const optStr = `${p.chest} - ${p.name} (${p.cat})`;
-                stageSelect.innerHTML += `<option value="${p.chest}">${optStr}</option>`;
-                judgeSelect.innerHTML += `<option value="${p.chest}">${optStr}</option>`;
+                const str = `${p.chest} - ${p.name}`;
+                stageSelect.innerHTML += `<option value="${p.chest}">${str}</option>`;
+                judgeSelect.innerHTML += `<option value="${p.chest}">${str}</option>`;
             });
+            updateLiveLEDQueue();
         }
 
         function pushToLiveStage() {
             const chest = document.getElementById('ctrlOnStageStudent').value;
-            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
             
             document.getElementById('ledResultOverlay').style.display = 'none';
             document.getElementById('ledStageCard').style.display = 'block';
@@ -522,28 +524,28 @@
                 return;
             }
 
-            const student = dataset.find(p => p.chest === chest);
-            if(student) {
-                document.getElementById('ledCategory').innerText = student.cat.toUpperCase();
-                document.getElementById('ledEventName').innerText = student.eventItem.toUpperCase();
-                document.getElementById('ledChestNo').innerText = student.chest;
-                document.getElementById('ledPartName').innerText = student.name;
+            const match = dataset.find(p => p.chest === chest);
+            if(match) {
+                // Formatting presentation view variables
+                const parts = currentFilter.split('] ');
+                document.getElementById('ledCategory').innerText = parts[0].replace('[','').toUpperCase();
+                document.getElementById('ledEventName').innerText = parts[1].toUpperCase();
+                document.getElementById('ledChestNo').innerText = match.chest;
+                document.getElementById('ledPartName').innerText = match.name;
             }
             updateLiveLEDQueue();
         }
 
         function updateLiveLEDQueue() {
-            const filterEvent = document.getElementById('ctrlEventFilter').value;
-            const currentChest = document.getElementById('ctrlOnStageStudent').value;
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
+            const activeChest = document.getElementById('ctrlOnStageStudent').value;
             const queueBox = document.getElementById('ledNextUpContainer');
             
             queueBox.innerHTML = '';
-            
-            // Fetch remaining candidates in queue matching this event item
-            const remaining = dataset.filter(p => p.eventItem === filterEvent && p.chest !== currentChest);
+            const remaining = dataset.filter(p => p.allocation === currentFilter && p.chest !== activeChest);
             
             if(remaining.length === 0) {
-                queueBox.innerHTML = '<div style="color:#64748b; font-weight:700; text-align:center; padding:20px;">No upcoming candidates.</div>';
+                queueBox.innerHTML = '<div style="color:#64748b; font-weight:700; text-align:center; padding:20px;">No upcoming queue rows.</div>';
                 return;
             }
 
@@ -558,16 +560,14 @@
         }
 
         function triggerLiveResultAnnouncement() {
-            const filterEvent = document.getElementById('ctrlEventFilter').value;
-            
-            // Sort filtered participants based on highest score
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
             const competitors = dataset
-                .filter(p => p.eventItem === filterEvent && p.score !== '')
+                .filter(p => p.allocation === currentFilter && p.score !== '')
                 .sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
 
             document.getElementById('ledStageCard').style.display = 'none';
-            document.getElementById('ledResultOverlay').style.display = 'block';
-            document.getElementById('ledResultTitle').innerHTML = `<i class="fa-solid fa-trophy"></i> WINNERS: ${filterEvent.toUpperCase()}`;
+            document.getElementById('ledResultOverlay').style.display = 'flex';
+            document.getElementById('ledResultTitle').innerHTML = `<i class="fa-solid fa-trophy"></i> WINNERS: ${currentFilter.toUpperCase()}`;
 
             document.getElementById('w1-name').innerText = competitors[0] ? competitors[0].name : "---";
             document.getElementById('w1-chest').innerText = competitors[0] ? "Chest No: " + competitors[0].chest : "Chest: --";
@@ -584,35 +584,34 @@
             document.getElementById('ledStageCard').style.display = 'block';
         }
 
-        // Judges view calculation engine rules
+        // Judge Input Calculations
         function calcJudgeTotal() {
             const c1 = parseFloat(document.getElementById('jdgC1').value) || 0;
             const c2 = parseFloat(document.getElementById('jdgC2').value) || 0;
             const c3 = parseFloat(document.getElementById('jdgC3').value) || 0;
 
-            if(c1 > 40) { alert('Presentation max 40 point limits!'); document.getElementById('jdgC1').value = 40; return; }
-            if(c2 > 30) { alert('Pronunciation max 30 point limits!'); document.getElementById('jdgC2').value = 30; return; }
-            if(c3 > 30) { alert('Melody max 30 point limits!'); document.getElementById('jdgC3').value = 30; return; }
+            if(c1 > 40) { alert('Presentation max points limit 40!'); document.getElementById('jdgC1').value = 40; return; }
+            if(c2 > 30) { alert('Pronunciation max points limit 30!'); document.getElementById('jdgC2').value = 30; return; }
+            if(c3 > 30) { alert('Melody max points limit 30!'); document.getElementById('jdgC3').value = 30; return; }
 
             document.getElementById('jdgTotalLabel').innerText = (c1 + c2 + c3) + " / 100";
         }
 
         function submitJudgeForm() {
             const chest = document.getElementById('jdgStudentSelector').value;
-            const scoreTotal = document.getElementById('jdgTotalLabel').innerText.split(' ')[0];
+            const finalVal = document.getElementById('jdgTotalLabel').innerText.split(' ')[0];
 
             if(!chest) {
-                alert('ദയവായി ഒരു ചെസ്റ്റ് നമ്പർ സെലക്ട് ചെയ്യുക!');
+                alert('ദയവായി ഒരു കുട്ടിയെ സെലക്ട് ചെയ്യുക!');
                 return;
             }
 
-            const idx = dataset.findIndex(p => p.chest === chest);
-            if(idx !== -1) {
-                dataset[idx].score = scoreTotal;
-                commitData();
-                alert(`Chest ${chest} evaluation scores submitted successfully!`);
+            const targetIdx = dataset.findIndex(p => p.chest === chest);
+            if(targetIdx !== -1) {
+                dataset[targetIdx].score = finalVal;
+                saveToMemory();
+                alert(`Chest No: ${chest} evaluation metrics saved successfully!`);
                 
-                // Clear fields safely
                 document.getElementById('jdgC1').value = '';
                 document.getElementById('jdgC2').value = '';
                 document.getElementById('jdgC3').value = '';
@@ -623,8 +622,8 @@
             }
         }
 
-        // Initialize Core Engine configurations on windows startup load
-        handleCatModeChange();
+        // Bootstrapping Setup
+        populateDropdowns();
         refreshAdminTable();
     </script>
 </body>
