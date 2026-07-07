@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATAVA FestHub - Full Screen Master Suite</title>
+    <title>ATAVA FestHub - Master Engine</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* Full Screen Master Navigation */
         .master-nav {
             background: #0f172a;
             padding: 12px 20px;
@@ -37,9 +36,7 @@
         .app-section { display: none; padding: 25px; min-height: calc(100vh - 70px); }
         .app-section.active { display: block; }
 
-        /* ==========================================
-           1. LED DISPLAY BOARD THEME (FULL SCREEN)
-           ========================================== */
+        /* LED DISPLAY BOARD THEME */
         .bg-dashboard {
             background: radial-gradient(circle at center, #0f2b1d 0%, #05140e 100%);
             color: #ffffff;
@@ -50,7 +47,7 @@
             box-shadow: 0 0 35px rgba(16, 185, 129, 0.4), inset 0 0 25px rgba(16, 185, 129, 0.3);
             border-radius: 20px;
             background: rgba(10, 25, 18, 0.9);
-            width: 100%; /* Full screen span */
+            width: 100%;
             margin: auto;
             padding: 30px;
         }
@@ -116,9 +113,7 @@
         .w-name { font-size: 2.2rem; font-weight: 800; color: #ffffff; }
         .w-chest { color: #a7f3d0; font-weight: 700; font-size: 1.4rem; margin-top: 5px; }
 
-        /* ==========================================
-           2. ADMIN PANEL THEME (FULL SCREEN LIGHT)
-           ========================================== */
+        /* ADMIN PANEL THEME */
         .bg-admin { background: #f8fafc; color: #1e293b; }
         .admin-container { width: 100%; max-width: 100%; margin: auto; }
         .admin-header { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid #0284c7; display: flex; justify-content: space-between; align-items: center; }
@@ -143,11 +138,10 @@
         th, td { padding: 14px 15px; border-bottom: 1px solid #e2e8f0; font-size: 1rem; text-align: left; }
         th { background: #f1f5f9; font-weight: 800; color: #475569; }
         td { font-weight: 600; }
-        .score-input { width: 80px; padding: 8px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 700; font-size: 1rem; }
+        .score-input { width: 110px; padding: 10px; border: 2px solid #0284c7; border-radius: 6px; text-align: center; font-weight: 800; font-size: 1.1rem; background: #f0f9ff; color: #0369a1; }
+        .score-input:focus { background: #fff; outline: 3px solid #38bdf8; }
 
-        /* ==========================================
-           3. JUDGES PANEL THEME
-           ========================================== */
+        /* JUDGES PANEL THEME */
         .bg-judge { background: #f1f5f9; }
         .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
         .judge-header { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
@@ -165,12 +159,14 @@
 </head>
 <body>
 
+    <!-- MASTER EXECUTIVE SUPER-BAR -->
     <div class="master-nav">
         <button class="nav-btn active" onclick="switchView('adminView', this)"><i class="fa-solid fa-gears"></i> 1. Admin Controller</button>
         <button class="nav-btn" onclick="switchView('dashboardView', this)"><i class="fa-solid fa-desktop"></i> 2. LED Display Board</button>
-        <button class="nav-btn" onclick="switchView('judgeView', this)"><i class="fa-solid fa-mobile-screen"></i> 3. Judges Mobile Portal</button>
+        <button class="nav-btn" onclick="switchView('judgeView', this)"><i class="fa-solid fa-mobile-screen"></i> 3. Judges Mobile Portal (Backup)</button>
     </div>
 
+    <!-- SECTION 1: FULL SCREEN ADMIN PANEL -->
     <div id="adminView" class="app-section bg-admin active">
         <div class="admin-container">
             <header class="admin-header">
@@ -178,13 +174,14 @@
                     <h1>ATAVA <span>FestHub Manager</span></h1>
                     <p>Meelad Art Festival Management Hub</p>
                 </div>
-                <div style="font-weight: 800; color: #0f5132; background: #d1e7dd; padding: 8px 15px; border-radius: 20px;">
-                    <i class="fa-solid fa-hard-drive"></i> LocalStorage Connected
+                <div style="font-weight: 800; color: #0369a1; background: #e0f2fe; padding: 8px 15px; border-radius: 20px;">
+                    <i class="fa-solid fa-file-signature"></i> Paper/Hybrid Active Mode
                 </div>
             </header>
 
             <div class="admin-grid-3">
                 
+                <!-- Card A: Add Custom Programs -->
                 <div class="card">
                     <div class="section-title"><i class="fa-solid fa-folder-plus"></i> A. Add New Event (പരിപാടികൾ)</div>
                     <form id="eventForm" onsubmit="addNewProgramItem(event)">
@@ -205,6 +202,7 @@
                     </form>
                 </div>
 
+                <!-- Card B: Participant Registration Form -->
                 <div class="card">
                     <div class="section-title"><i class="fa-solid fa-user-plus"></i> B. Participant Registration</div>
                     <form id="regForm" onsubmit="saveNewParticipant(event)">
@@ -219,18 +217,21 @@
                         <div class="form-group">
                             <label>Select Category & Event</label>
                             <select id="admEventSelect" class="form-control" required>
-                                </select>
+                                <!-- Dynamically filled -->
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-success" style="width: 100%; justify-content: center;"><i class="fa-solid fa-user-check"></i> Register Student</button>
                     </form>
                 </div>
 
+                <!-- Card C: Live LED Screen Controller Dashboard Router -->
                 <div class="card">
                     <div class="section-title"><i class="fa-solid fa-bullhorn"></i> C. Live Stage Controller</div>
                     <div class="form-group">
-                        <label>Select Active Event to Manage</label>
-                        <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions()">
-                            </select>
+                        <label>Select Active Event to Manage / Enter Score</label>
+                        <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions(); refreshAdminTable();">
+                            <!-- Populated Dynamically -->
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Select Student On Stage</label>
@@ -239,15 +240,19 @@
                     <div style="display: flex; flex-direction: column; gap: 8px;">
                         <button class="btn btn-primary" style="justify-content: center;" onclick="pushToLiveStage()"><i class="fa-solid fa-play"></i> Push to LED Screen</button>
                         <div style="display: flex; gap: 8px;">
-                            <button class="btn btn-warning" style="flex: 1; justify-content: center;" onclick="triggerLiveResultAnnouncement()"><i class="fa-solid fa-trophy"></i> Results</button>
+                            <button class="btn btn-warning" style="flex: 1; justify-content: center;" onclick="triggerLiveResultAnnouncement()"><i class="fa-solid fa-trophy"></i> Announce Results</button>
                             <button class="btn btn-danger" style="flex: 1; justify-content: center;" onclick="clearResultOverlay()"><i class="fa-solid fa-eye-slash"></i> Clear Result</button>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Full Screen Wide Score Grid Matrix -->
             <div class="card">
-                <div class="section-title"><i class="fa-solid fa-list-check"></i> D. Score Sheets & Hybrid Data Matrix</div>
+                <div class="section-title" style="justify-content: space-between;">
+                    <span><i class="fa-solid fa-list-check"></i> D. Score Input Matrix (പേപ്പർ നോക്കി ഇവിടെ ടൈപ്പ് ചെയ്യാം)</span>
+                    <span style="font-size: 0.9rem; color: #64748b;">*മുകളിൽ സെലക്ട് ചെയ്ത ഇവന്റിലെ കുട്ടികൾ മാത്രമേ ഇവിടെ കാണിക്കൂ.</span>
+                </div>
                 <div style="overflow-x: auto;">
                     <table>
                         <thead>
@@ -255,8 +260,8 @@
                                 <th>Chest No</th>
                                 <th>Name</th>
                                 <th>Category Group & Event Item</th>
-                                <th>Score (മാർക്ക്)</th>
-                                <th>Actions</th>
+                                <th style="width: 150px;">Score (പേപ്പർ മാർക്ക്)</th>
+                                <th style="width: 80px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="adminTableBody"></tbody>
@@ -268,6 +273,7 @@
         </div>
     </div>
 
+    <!-- SECTION 2: LIVE EXTENDED LED SCREEN PANEL -->
     <div id="dashboardView" class="app-section bg-dashboard">
         <div class="dashboard-container">
             <div class="main-header">
@@ -324,6 +330,7 @@
         </div>
     </div>
 
+    <!-- SECTION 3: JUDGES MOBILE INTERACTION FRAME (BACKUP) -->
     <div id="judgeView" class="app-section bg-judge">
         <div class="judge-wrapper">
             <div class="judge-header">
@@ -369,8 +376,8 @@
         </div>
     </div>
 
+    <!-- CORE SYSTEM DATA FLOW AND UTILITIES PROGRAM CODE -->
     <script>
-        // Memory Initialization
         let dataset = JSON.parse(localStorage.getItem('atava_master_students')) || [];
         let programList = JSON.parse(localStorage.getItem('atava_master_programs')) || [
             { category: 'Sub Junior (U-11)', name: 'Madh Song (മദ്ഹ് ഗാനം)' },
@@ -389,7 +396,6 @@
             updateLiveLEDQueue();
         }
 
-        // Add Custom Program Logic
         function addNewProgramItem(e) {
             e.preventDefault();
             const cat = document.getElementById('evtCategory').value;
@@ -407,7 +413,6 @@
             alert('പുതിയ മത്സരം വിജയകരമായി ആഡ് ചെയ്തു!');
         }
 
-        // Dynamic Dropdown Synchronization Engine
         function populateDropdowns() {
             const regSelect = document.getElementById('admEventSelect');
             const filterSelect = document.getElementById('ctrlEventFilter');
@@ -429,7 +434,6 @@
             syncStageOptions();
         }
 
-        // Student Data Flow
         function saveNewParticipant(e) {
             e.preventDefault();
             const name = document.getElementById('admName').value.trim();
@@ -448,18 +452,21 @@
             syncStageOptions();
         }
 
-        function deleteParticipantRecord(index) {
+        function deleteParticipantRecord(chestNo) {
             if(confirm('ഈ മത്സരാർത്ഥിയെ സിസ്റ്റത്തിൽ നിന്നും നീക്കം ചെയ്യണോ?')) {
-                dataset.splice(index, 1);
+                dataset = dataset.filter(p => p.chest !== chestNo);
                 saveToMemory();
                 refreshAdminTable();
                 syncStageOptions();
             }
         }
 
-        function handleDirectScoreEdit(index, value) {
-            dataset[index].score = value;
-            localStorage.setItem('atava_master_students', JSON.stringify(dataset));
+        function handleDirectScoreEdit(chestNo, value) {
+            const index = dataset.findIndex(p => p.chest === chestNo);
+            if(index !== -1) {
+                dataset[index].score = value;
+                localStorage.setItem('atava_master_students', JSON.stringify(dataset));
+            }
         }
 
         function saveToMemory() {
@@ -468,24 +475,27 @@
 
         function refreshAdminTable() {
             const tbody = document.getElementById('adminTableBody');
+            const currentFilter = document.getElementById('ctrlEventFilter').value;
             tbody.innerHTML = '';
 
-            if(dataset.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No records allocated yet. Register students above!</td></tr>`;
+            const filteredData = dataset.filter(p => p.allocation === currentFilter);
+
+            if(filteredData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">ഈ കാറ്റഗറിയിൽ നിലവിൽ കുട്ടികളെ ആഡ് ചെയ്തിട്ടില്ല! പുതിയ കുട്ടികളെ ബി ഭാഗത്തു നിന്നും ആഡ് ചെയ്യുക.</td></tr>`;
                 return;
             }
 
-            dataset.forEach((p, index) => {
+            filteredData.forEach((p) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td style="color:#0284c7; font-weight:800; font-size:1.1rem;">${p.chest}</td>
-                        <td style="font-size:1.05rem;">${p.name}</td>
-                        <td><span style="background:#e2e8f0; padding:5px 10px; border-radius:6px; font-size:0.9rem;">${p.allocation}</span></td>
+                        <td style="color:#0284c7; font-weight:800; font-size:1.2rem;">${p.chest}</td>
+                        <td style="font-size:1.1rem;">${p.name}</td>
+                        <td><span style="background:#e0f2fe; color:#0369a1; padding:6px 12px; border-radius:6px; font-size:0.95rem; font-weight:700;">${p.allocation}</span></td>
                         <td>
-                            <input type="number" class="score-input" value="${p.score}" min="0" max="100" oninput="handleDirectScoreEdit(${index}, this.value)" placeholder="0">
+                            <input type="number" class="score-input" value="${p.score}" min="0" max="100" oninput="handleDirectScoreEdit('${p.chest}', this.value)" placeholder="0">
                         </td>
                         <td>
-                            <button class="btn btn-danger" onclick="deleteParticipantRecord(${index})"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-danger" onclick="deleteParticipantRecord('${p.chest}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -526,7 +536,6 @@
 
             const match = dataset.find(p => p.chest === chest);
             if(match) {
-                // Formatting presentation view variables
                 const parts = currentFilter.split('] ');
                 document.getElementById('ledCategory').innerText = parts[0].replace('[','').toUpperCase();
                 document.getElementById('ledEventName').innerText = parts[1].toUpperCase();
@@ -584,7 +593,6 @@
             document.getElementById('ledStageCard').style.display = 'block';
         }
 
-        // Judge Input Calculations
         function calcJudgeTotal() {
             const c1 = parseFloat(document.getElementById('jdgC1').value) || 0;
             const c2 = parseFloat(document.getElementById('jdgC2').value) || 0;
@@ -622,7 +630,6 @@
             }
         }
 
-        // Bootstrapping Setup
         populateDropdowns();
         refreshAdminTable();
     </script>
