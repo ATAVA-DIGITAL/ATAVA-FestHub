@@ -134,7 +134,7 @@
         .btn { padding: 12px 20px; border: none; border-radius: 6px; font-weight: 800; font-size: 1rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
         .btn-primary { background: #0284c7; color: white; }
         .btn-success { background: #10b981; color: white; }
-        .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
+        .btn-danger { background: #ef4444; color: white; padding: 4px 8px; font-size: 0.8rem; }
         .btn-warning { background: #f59e0b; color: white; }
         
         table { width: 100%; border-collapse: collapse; background: white; margin-top: 10px; }
@@ -144,7 +144,7 @@
         .score-input { width: 110px; padding: 10px; border: 2px solid #0284c7; border-radius: 6px; text-align: center; font-weight: 800; font-size: 1.1rem; background: #f0f9ff; color: #0369a1; }
         .score-input:focus { background: #fff; outline: 3px solid #38bdf8; }
 
-        .mini-table { font-size: 0.9rem; }
+        .mini-table { font-size: 0.9rem; width: 100%; }
         .mini-table th, .mini-table td { padding: 8px 10px; }
 
         /* Status Section Badges Matrix */
@@ -155,7 +155,7 @@
 
         /* JUDGES PANEL THEME */
         .bg-judge { background: #f1f5f9; }
-        .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 166px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
+        .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
         .judge-header { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
         .event-badge { background: #e0f2fe; color: #0369a1; padding: 12px; border-radius: 8px; text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; }
         .criteria-card { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
@@ -223,17 +223,19 @@
                     <div class="section-title"><i class="fa-solid fa-folder-plus"></i> A. Add New Event (പരിപാടികൾ)</div>
                     <form id="eventForm" onsubmit="addNewProgramItem(event)">
                         <div class="form-group">
-                            <label>Category Group</label>
-                            <select id="evtCategory" class="form-control">
-                                <option value="Sub Junior (U-11)">Sub Junior (U-11)</option>
-                                <option value="Junior (U-14)">Junior (U-14)</option>
-                                <option value="Senior (U-17)">Senior (U-17)</option>
-                                <option value="General">General</option>
+                            <label>Select Stage (സ്റ്റേജ്)</label>
+                            <select id="evtStage" class="form-control">
+                                <option value="STAGE 1">STAGE 1</option>
+                                <option value="STAGE 3">STAGE 3</option>
+                                <option value="STAGE 4 (UP)">STAGE 4 (UP)</option>
+                                <option value="STAGE 5 (HSS)">STAGE 5 (HSS)</option>
+                                <option value="STAGE 6 (HS)">STAGE 6 (HS)</option>
+                                <option value="STAGE 7 (JUNIOR)">STAGE 7 (JUNIOR)</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Event Name (മത്സര ഇനം)</label>
-                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Burda, Madh Song, Qirath" oninput="this.value = this.value.toUpperCase()">
+                            <label>Category / Item Name (മത്സര ഇനം)</label>
+                            <input type="text" id="evtName" class="form-control" required placeholder="eg: MADH SONG (HS)" oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 10px;"><i class="fa-solid fa-plus"></i> Add Event</button>
                     </form>
@@ -248,7 +250,7 @@
                     <div style="font-weight: 800; font-size: 0.95rem; margin-top: 15px; color: #1e293b; border-top: 2px solid #f1f5f9; padding-top: 10px;">
                         <i class="fa-solid fa-clock-rotate-left"></i> 1. Pending Events (നടക്കാനുള്ളവ)
                     </div>
-                    <div style="max-height: 110px; overflow-y: auto; margin-top: 5px; border: 1px solid #ffeeba; border-radius: 6px;">
+                    <div style="max-height: 150px; overflow-y: auto; margin-top: 5px; border: 1px solid #ffeeba; border-radius: 6px;">
                         <table class="mini-table">
                             <tbody id="pendingEventsList"></tbody>
                         </table>
@@ -257,7 +259,7 @@
                     <div style="font-weight: 800; font-size: 0.95rem; margin-top: 10px; color: #155724;">
                         <i class="fa-solid fa-square-check"></i> 2. Completed Events (കഴിഞ്ഞവ)
                     </div>
-                    <div style="max-height: 110px; overflow-y: auto; margin-top: 5px; border: 1px solid #c3e6cb; border-radius: 6px;">
+                    <div style="max-height: 150px; overflow-y: auto; margin-top: 5px; border: 1px solid #c3e6cb; border-radius: 6px;">
                         <table class="mini-table">
                             <tbody id="completedEventsList"></tbody>
                         </table>
@@ -277,7 +279,7 @@
                             <input type="number" id="admChest" class="form-control" required placeholder="Enter Chest No">
                         </div>
                         <div class="form-group">
-                            <label>Select Category & Event</label>
+                            <label>Select Stage & Event</label>
                             <select id="admEventSelect" class="form-control" required>
                                 <!-- Dynamically filled -->
                             </select>
@@ -333,7 +335,7 @@
                             <tr>
                                 <th>Chest No</th>
                                 <th>Name</th>
-                                <th>Category Group & Event Item</th>
+                                <th>Stage & Event Item</th>
                                 <th style="width: 150px;">Score (മാർക്ക്)</th>
                                 <th style="width: 80px;">Actions</th>
                             </tr>
@@ -357,7 +359,7 @@
         <div class="dashboard-container">
             <div class="main-header">
                 <h1 id="ledFestTitle">ATAVA FESTHUB 2026</h1>
-                <p id="ledSubTitle">MAHLLUL MARHABA MADRASA ART FESTIVAL</p>
+                <p id="ledSubTitle">DAY 01 - JULY 31 | MASTER ART FESTIVAL</p>
             </div>
 
             <div class="main-layout">
@@ -458,10 +460,74 @@
     <!-- CORE SYSTEM DATA FLOW AND UTILITIES PROGRAM CODE -->
     <script>
         let dataset = JSON.parse(localStorage.getItem('atava_master_students')) || [];
+        
+        // Default Image Program List Array Matrix
         let programList = JSON.parse(localStorage.getItem('atava_master_programs')) || [
-            { category: 'Sub Junior (U-11)', name: 'MADH SONG (മദ്ഹ് ഗാനം)' },
-            { category: 'Junior (U-14)', name: 'QIRATH (ഖിറാഅത്ത്)' },
-            { category: 'Senior (U-17)', name: 'SPEECH (പ്രസംഗം)' }
+            // STAGE 1
+            { category: 'STAGE 1', name: 'MADH SONG (HS)' },
+            { category: 'STAGE 1', name: 'GROUP SONG (CAT A)' },
+            { category: 'STAGE 1', name: 'MAPPILAPATTU (SNR)' },
+            { category: 'STAGE 1', name: 'QAWALI' },
+            { category: 'STAGE 1', name: 'MAPPILAPPATTU (HSS)' },
+            { category: 'STAGE 1', name: 'MAPPILAPPATTU (JNR)' },
+            { category: 'STAGE 1', name: 'DAFFU' },
+            { category: 'STAGE 1', name: 'ARABANA' },
+            
+            // STAGE 3
+            { category: 'STAGE 3', name: 'MAPPILAPPATTU (UP)' },
+            { category: 'STAGE 3', name: 'BAKTHIGANAM (HSS)' },
+            { category: 'STAGE 3', name: 'KAVITHA PARAYANAM' },
+            { category: 'STAGE 3', name: 'ARABIC POEM RECITATION (HS)' },
+            { category: 'STAGE 3', name: 'QUIZ (JNR)' },
+            { category: 'STAGE 3', name: 'RISALA QUIZ' },
+            { category: 'STAGE 3', name: 'QUIZ (SNR)' },
+            
+            // STAGE 4 (UP)
+            { category: 'STAGE 4 (UP)', name: 'PENCIL DRAWING' },
+            { category: 'STAGE 4 (UP)', name: 'WATER COLOUR' },
+            { category: 'STAGE 4 (UP)', name: 'STORY WRITING' },
+            { category: 'STAGE 4 (UP)', name: 'GANITHA KELI' },
+            { category: 'STAGE 4 (UP)', name: 'ARABIC READING' },
+            { category: 'STAGE 4 (UP)', name: 'ENGLISH READING' },
+            { category: 'STAGE 4 (UP)', name: 'SPELLING B' },
+            { category: 'STAGE 4 (UP)', name: 'BOOK TEST' },
+            { category: 'STAGE 4 (UP)', name: 'QUIZ' },
+            
+            // STAGE 5 (HSS)
+            { category: 'STAGE 5 (HSS)', name: 'PENCIL DRAWING' },
+            { category: 'STAGE 5 (HSS)', name: 'WATER COLOUR' },
+            { category: 'STAGE 5 (HSS)', name: 'STORY WRITING' },
+            { category: 'STAGE 5 (HSS)', name: 'POEM WRITING' },
+            { category: 'STAGE 5 (HSS)', name: 'MALAYALAM SPEECH' },
+            { category: 'STAGE 5 (HSS)', name: 'ENGLISH SPEECH' },
+            { category: 'STAGE 5 (HSS)', name: 'BOOK TEST' },
+            { category: 'STAGE 5 (HSS)', name: 'NEWS WRITING' },
+            { category: 'STAGE 5 (HSS)', name: 'CAPTION WRITING' },
+            { category: 'STAGE 5 (HSS)', name: 'CALIGRAPHY ARABIC' },
+            
+            // STAGE 6 (HS)
+            { category: 'STAGE 6 (HS)', name: 'PENCIL DRAWING' },
+            { category: 'STAGE 6 (HS)', name: 'WATER COLOUR' },
+            { category: 'STAGE 6 (HS)', name: 'BOOK TEST' },
+            { category: 'STAGE 6 (HS)', name: 'QUIZ' },
+            { category: 'STAGE 6 (HS)', name: 'STORY WRITING' },
+            { category: 'STAGE 6 (HS)', name: 'POEM WRITING' },
+            { category: 'STAGE 6 (HS)', name: 'ESSAY MALAYALAM' },
+            { category: 'STAGE 6 (HS)', name: 'NEWS READING' },
+            { category: 'STAGE 6 (HS)', name: 'CAPTION WRITING' },
+            { category: 'STAGE 6 (HS)', name: 'LANGUAGE GAME' },
+            
+            // STAGE 7 (JUNIOR)
+            { category: 'STAGE 7 (JUNIOR)', name: 'POEM WRITING' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'STORY WRITING' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'VIPLAVAGANA RACHANA' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'BOOK TEST' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'ESSAY MALAYALAM' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'ESSAY ARABIC' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'MUDRAVAKYA RACHANA' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'MADH\'U GANA RACHANA' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'TRANSLATION ARABIC' },
+            { category: 'STAGE 7 (JUNIOR)', name: 'CALIGRAPHY ARABIC' }
         ];
 
         function switchView(viewId, element) {
@@ -479,20 +545,20 @@
 
         function addNewProgramItem(e) {
             e.preventDefault();
-            const cat = document.getElementById('evtCategory').value;
+            const stage = document.getElementById('evtStage').value;
             const name = document.getElementById('evtName').value.trim().toUpperCase();
 
-            if(programList.some(p => p.category === cat && p.name.toUpperCase() === name)) {
-                alert('ഈ പരിപാടി ഈ കാറ്റഗറിയിൽ നിലവിലുണ്ട്!');
+            if(programList.some(p => p.category === stage && p.name.toUpperCase() === name)) {
+                alert('ഈ മത്സരം ഈ സ്റ്റേജിൽ നിലവിലുണ്ട്!');
                 return;
             }
 
-            programList.push({ category: cat, name: name });
+            programList.push({ category: stage, name: name });
             localStorage.setItem('atava_master_programs', JSON.stringify(programList));
-            document.getElementById('eventForm').reset();
+            document.getElementById('evtName').value = '';
             populateDropdowns();
             trackEventStatuses();
-            alert('പുതിയ മത്സരം വിജയകരമായി ആഡ് ചെയ്തു!');
+            alert('പുതിയ മത്സരം ലിസ്റ്റിലേക്ക് ആഡ് ചെയ്തു!');
         }
 
         function deleteProgramItem(category, name) {
@@ -524,13 +590,11 @@
                 const fullTitle = `[${p.category}] ${p.name}`;
                 const eventStudents = dataset.filter(s => s.allocation === fullTitle);
                 
-                // If there are students and ALL of them have scores registered, it is COMPLETED.
-                // If no students or at least one score is empty, it is PENDING.
                 const isCompleted = eventStudents.length > 0 && eventStudents.every(s => s.score !== '');
 
                 const rowHtml = `
                     <tr>
-                        <td style="font-size:0.8rem; color:#64748b; width:40%; font-weight:700;">${p.category}</td>
+                        <td style="font-size:0.8rem; color:#0284c7; width:35%; font-weight:700;">${p.category}</td>
                         <td style="font-weight:700; color:#0f172a;">${p.name}</td>
                         <td style="text-align:center; width:35px;">
                             <button class="btn btn-danger" style="padding:2px 5px; font-size:0.7rem;" onclick="deleteProgramItem('${p.category}', '${p.name}')"><i class="fa-solid fa-trash"></i></button>
@@ -638,7 +702,7 @@
             const filteredData = dataset.filter(p => p.allocation === currentFilter);
 
             if(filteredData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">ഈ കാറ്റഗറിയിൽ നിലവിൽ കുട്ടികളെ ആഡ് ചെയ്തിട്ടില്ല! പുതിയ കുട്ടികളെ ബി ഭാഗത്തു നിന്നും ആഡ് ചെയ്യുക.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">ഈ ഇനത്തിൽ നിലവിൽ കുട്ടികളെ ആഡ് ചെയ്തിട്ടില്ല! പുതിയ കുട്ടികളെ B ഭാഗത്തു നിന്നും ആഡ് ചെയ്യുക.</td></tr>`;
                 return;
             }
 
@@ -677,7 +741,6 @@
             const printArea = document.getElementById('printArea');
             printArea.innerHTML = '';
 
-            // Grid card layout generator matrix
             targetsToPrint.forEach(p => {
                 printArea.innerHTML += `
                     <div class="print-card-token">
