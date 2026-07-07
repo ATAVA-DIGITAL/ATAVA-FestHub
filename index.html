@@ -8,6 +8,9 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
+        /* Force Input to Uppercase Aesthetics */
+        input[type="text"], select, .form-control { text-transform: uppercase; }
+
         .master-nav {
             background: #0f172a;
             padding: 12px 20px;
@@ -144,6 +147,12 @@
         .mini-table { font-size: 0.9rem; }
         .mini-table th, .mini-table td { padding: 8px 10px; }
 
+        /* Status Section Badges Matrix */
+        .status-container { display: flex; gap: 15px; margin-top: 10px; font-size: 0.9rem; font-weight: 800; }
+        .status-badge { flex: 1; padding: 8px; border-radius: 6px; text-align: center; }
+        .status-pending { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .status-done { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+
         /* JUDGES PANEL THEME */
         .bg-judge { background: #f1f5f9; }
         .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 166px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
@@ -209,7 +218,7 @@
 
             <div class="admin-grid-3">
                 
-                <!-- Card A: Add Custom Programs & View Added Events -->
+                <!-- Card A: Add Custom Programs & Advanced Track Dashboard -->
                 <div class="card">
                     <div class="section-title"><i class="fa-solid fa-folder-plus"></i> A. Add New Event (പരിപാടികൾ)</div>
                     <form id="eventForm" onsubmit="addNewProgramItem(event)">
@@ -224,25 +233,33 @@
                         </div>
                         <div class="form-group">
                             <label>Event Name (മത്സര ഇനം)</label>
-                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Burda, Madh Song, Qirath">
+                            <input type="text" id="evtName" class="form-control" required placeholder="eg: Burda, Madh Song, Qirath" oninput="this.value = this.value.toUpperCase()">
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 15px;"><i class="fa-solid fa-plus"></i> Add Event</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-bottom: 10px;"><i class="fa-solid fa-plus"></i> Add Event</button>
                     </form>
 
-                    <!-- Added Events List view -->
-                    <div style="font-weight: 800; font-size: 0.95rem; margin-top: 10px; color: #475569; border-top: 2px solid #f1f5f9; padding-top: 10px;">
-                        <i class="fa-solid fa-list-ol"></i> Added Events List (<span id="totalEventsCount">0</span>)
+                    <!-- Advanced Status Counters Panel -->
+                    <div class="status-container">
+                        <div class="status-badge status-pending">Pending: <span id="countPending">0</span></div>
+                        <div class="status-badge status-done">Completed: <span id="countDone">0</span></div>
                     </div>
-                    <div style="max-height: 180px; overflow-y: auto; margin-top: 8px; border: 1px solid #e2e8f0; border-radius: 6px;">
+
+                    <!-- Program Tracker Management Lists tabs layout -->
+                    <div style="font-weight: 800; font-size: 0.95rem; margin-top: 15px; color: #1e293b; border-top: 2px solid #f1f5f9; padding-top: 10px;">
+                        <i class="fa-solid fa-clock-rotate-left"></i> 1. Pending Events (നടക്കാനുള്ളവ)
+                    </div>
+                    <div style="max-height: 110px; overflow-y: auto; margin-top: 5px; border: 1px solid #ffeeba; border-radius: 6px;">
                         <table class="mini-table">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Event</th>
-                                    <th style="width: 40px;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="miniEventTableBody"></tbody>
+                            <tbody id="pendingEventsList"></tbody>
+                        </table>
+                    </div>
+
+                    <div style="font-weight: 800; font-size: 0.95rem; margin-top: 10px; color: #155724;">
+                        <i class="fa-solid fa-square-check"></i> 2. Completed Events (കഴിഞ്ഞവ)
+                    </div>
+                    <div style="max-height: 110px; overflow-y: auto; margin-top: 5px; border: 1px solid #c3e6cb; border-radius: 6px;">
+                        <table class="mini-table">
+                            <tbody id="completedEventsList"></tbody>
                         </table>
                     </div>
                 </div>
@@ -253,7 +270,7 @@
                     <form id="regForm" onsubmit="saveNewParticipant(event)">
                         <div class="form-group">
                             <label>Student Name</label>
-                            <input type="text" id="admName" class="form-control" required placeholder="Enter full name">
+                            <input type="text" id="admName" class="form-control" required placeholder="Enter full name" oninput="this.value = this.value.toUpperCase()">
                         </div>
                         <div class="form-group">
                             <label>Chest Number</label>
@@ -442,9 +459,9 @@
     <script>
         let dataset = JSON.parse(localStorage.getItem('atava_master_students')) || [];
         let programList = JSON.parse(localStorage.getItem('atava_master_programs')) || [
-            { category: 'Sub Junior (U-11)', name: 'Madh Song (മദ്ഹ് ഗാനം)' },
-            { category: 'Junior (U-14)', name: 'Qirath (ഖിറാഅത്ത്)' },
-            { category: 'Senior (U-17)', name: 'Speech (പ്രസംഗം)' }
+            { category: 'Sub Junior (U-11)', name: 'MADH SONG (മദ്ഹ് ഗാനം)' },
+            { category: 'Junior (U-14)', name: 'QIRATH (ഖിറാഅത്ത്)' },
+            { category: 'Senior (U-17)', name: 'SPEECH (പ്രസംഗം)' }
         ];
 
         function switchView(viewId, element) {
@@ -457,14 +474,15 @@
             refreshAdminTable();
             updateLiveLEDQueue();
             syncPrintStudentDropdown();
+            trackEventStatuses();
         }
 
         function addNewProgramItem(e) {
             e.preventDefault();
             const cat = document.getElementById('evtCategory').value;
-            const name = document.getElementById('evtName').value.trim();
+            const name = document.getElementById('evtName').value.trim().toUpperCase();
 
-            if(programList.some(p => p.category === cat && p.name.toLowerCase() === name.toLowerCase())) {
+            if(programList.some(p => p.category === cat && p.name.toUpperCase() === name)) {
                 alert('ഈ പരിപാടി ഈ കാറ്റഗറിയിൽ നിലവിലുണ്ട്!');
                 return;
             }
@@ -473,49 +491,67 @@
             localStorage.setItem('atava_master_programs', JSON.stringify(programList));
             document.getElementById('eventForm').reset();
             populateDropdowns();
-            refreshMiniEventTable();
+            trackEventStatuses();
             alert('പുതിയ മത്സരം വിജയകരമായി ആഡ് ചെയ്തു!');
         }
 
-        function deleteProgramItem(index) {
-            const prog = programList[index];
-            const progTitle = `[${prog.category}] ${prog.name}`;
-            
-            // Check if any student registered under this profile
+        function deleteProgramItem(category, name) {
+            const progTitle = `[${category}] ${name}`;
             if(dataset.some(s => s.allocation === progTitle)) {
                 alert('ഈ പരിപാടിയിൽ കുട്ടികൾ രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട്! അതിനാൽ ഇത് ഡിലീറ്റ് ചെയ്യാൻ സാധിക്കില്ല.');
                 return;
             }
 
-            if(confirm(`"${prog.name}" എന്ന മത്സരം ലിസ്റ്റിൽ നിന്നും നീക്കം ചെയ്യണോ?`)) {
-                programList.splice(index, 1);
+            if(confirm(`"${name}" എന്ന മത്സരം ലിസ്റ്റിൽ നിന്നും നീക്കം ചെയ്യണോ?`)) {
+                programList = programList.filter(p => !(p.category === category && p.name === name));
                 localStorage.setItem('atava_master_programs', JSON.stringify(programList));
                 populateDropdowns();
-                refreshMiniEventTable();
+                trackEventStatuses();
             }
         }
 
-        function refreshMiniEventTable() {
-            const tbody = document.getElementById('miniEventTableBody');
-            document.getElementById('totalEventsCount').innerText = programList.length;
-            tbody.innerHTML = '';
+        function trackEventStatuses() {
+            const pendingBody = document.getElementById('pendingEventsList');
+            const completedBody = document.getElementById('completedEventsList');
+            
+            pendingBody.innerHTML = '';
+            completedBody.innerHTML = '';
+            
+            let pendingCount = 0;
+            let completedCount = 0;
 
-            if(programList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No events added.</td></tr>`;
-                return;
-            }
+            programList.forEach(p => {
+                const fullTitle = `[${p.category}] ${p.name}`;
+                const eventStudents = dataset.filter(s => s.allocation === fullTitle);
+                
+                // If there are students and ALL of them have scores registered, it is COMPLETED.
+                // If no students or at least one score is empty, it is PENDING.
+                const isCompleted = eventStudents.length > 0 && eventStudents.every(s => s.score !== '');
 
-            programList.forEach((p, idx) => {
-                tbody.innerHTML += `
+                const rowHtml = `
                     <tr>
-                        <td style="font-size:0.85rem; color:#475569;">${p.category}</td>
-                        <td style="color:#0f172a; font-weight:700;">${p.name}</td>
-                        <td style="text-align:center;">
-                            <button class="btn btn-danger" style="padding:3px 6px; font-size:0.75rem;" onclick="deleteProgramItem(${idx})"><i class="fa-solid fa-trash"></i></button>
+                        <td style="font-size:0.8rem; color:#64748b; width:40%; font-weight:700;">${p.category}</td>
+                        <td style="font-weight:700; color:#0f172a;">${p.name}</td>
+                        <td style="text-align:center; width:35px;">
+                            <button class="btn btn-danger" style="padding:2px 5px; font-size:0.7rem;" onclick="deleteProgramItem('${p.category}', '${p.name}')"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
+
+                if(isCompleted) {
+                    completedBody.innerHTML += rowHtml;
+                    completedCount++;
+                } else {
+                    pendingBody.innerHTML += rowHtml;
+                    pendingCount++;
+                }
             });
+
+            document.getElementById('countPending').innerText = pendingCount;
+            document.getElementById('countDone').innerText = completedCount;
+
+            if(pendingCount === 0) pendingBody.innerHTML = '<tr><td style="color:#94a3b8; text-align:center; padding:5px;">No pending events!</td></tr>';
+            if(completedCount === 0) completedBody.innerHTML = '<tr><td style="color:#94a3b8; text-align:center; padding:5px;">No completed events yet.</td></tr>';
         }
 
         function populateDropdowns() {
@@ -552,7 +588,7 @@
 
         function saveNewParticipant(e) {
             e.preventDefault();
-            const name = document.getElementById('admName').value.trim();
+            const name = document.getElementById('admName').value.trim().toUpperCase();
             const chest = document.getElementById('admChest').value.trim();
             const allocation = document.getElementById('admEventSelect').value;
 
@@ -567,6 +603,7 @@
             refreshAdminTable();
             syncStageOptions();
             syncPrintStudentDropdown();
+            trackEventStatuses();
         }
 
         function deleteParticipantRecord(chestNo) {
@@ -576,6 +613,7 @@
                 refreshAdminTable();
                 syncStageOptions();
                 syncPrintStudentDropdown();
+                trackEventStatuses();
             }
         }
 
@@ -584,6 +622,7 @@
             if(index !== -1) {
                 dataset[index].score = value;
                 localStorage.setItem('atava_master_students', JSON.stringify(dataset));
+                trackEventStatuses();
             }
         }
 
@@ -638,7 +677,7 @@
             const printArea = document.getElementById('printArea');
             printArea.innerHTML = '';
 
-            // Generate selective/all mini evaluation cards on matrix loop
+            // Grid card layout generator matrix
             targetsToPrint.forEach(p => {
                 printArea.innerHTML += `
                     <div class="print-card-token">
@@ -649,8 +688,8 @@
                         <div class="info-row">
                             <div>CHEST NO: ${p.chest}</div>
                         </div>
-                        <div style="font-size:0.85rem; font-weight:bold; margin-bottom:5px; border-bottom:1px solid #000; color:#000;">
-                            Name: ${p.name.toUpperCase()} <br> Item: ${currentFilter}
+                        <div style="font-size:0.85rem; font-weight:bold; margin-bottom:5px; border-bottom:1px solid #000; color:#000; text-transform: uppercase;">
+                            Name: ${p.name} <br> Item: ${currentFilter}
                         </div>
                         <table class="print-table">
                             <thead>
@@ -819,13 +858,14 @@
                 document.getElementById('jdgStudentSelector').value = '';
                 
                 refreshAdminTable();
+                trackEventStatuses();
             }
         }
 
-        // Run Init Matrix engine methods
+        // Init procedures matrix
         populateDropdowns();
         refreshAdminTable();
-        refreshMiniEventTable();
+        trackEventStatuses();
     </script>
 </body>
 </html>
