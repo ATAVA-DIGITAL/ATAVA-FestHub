@@ -3,284 +3,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATAVA FestHub - Judges Panel</title>
+    <title>ATAVA FestHub - All-in-One Master Suite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        body { 
-            background: #f8fafc; /* CLEAN WHITE/LIGHT BG */
-            color: #0f172a; 
-            padding: 15px;
+        /* Master Navigation Bar at top to switch views easily */
+        .master-nav {
+            background: #0f172a;
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            gap: 15px;
+            justify-content: center;
+            border-bottom: 4px solid #0284c7;
         }
-
-        .judge-container {
-            max-width: 500px;
-            width: 100%;
-            margin: auto;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-        }
-
-        /* Header Area */
-        .judge-header {
-            text-align: center;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .judge-header h1 {
-            font-size: 1.5rem;
-            color: #0284c7;
-            font-weight: 900;
-        }
-        .judge-header p {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 700;
-            margin-top: 2px;
-        }
-
-        /* Dynamic Event Info Badge */
-        .event-badge {
-            background: #e0f2fe;
-            color: #0369a1;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            border: 1px solid #bae6fd;
-        }
-
-        /* Participant Selector */
-        .selector-group {
-            margin-bottom: 20px;
-        }
-        .selector-group label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 800;
-            color: #334155;
-            margin-bottom: 8px;
-        }
-        .large-select {
-            width: 100%;
-            padding: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-            background-color: #fff;
-            color: #0f172a;
-        }
-        .large-select:focus {
-            border-color: #0284c7;
-            outline: none;
-        }
-
-        /* Scoring Criteria Block */
-        .criteria-card {
-            background: #f1f5f9;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .criteria-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: #475569;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 5px;
-        }
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .input-row label {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        .score-box {
-            width: 80px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-align: center;
-            border: 2px solid #cbd5e1;
-            border-radius: 8px;
-        }
-        .score-box:focus {
-            border-color: #10b981;
-            outline: none;
-        }
-
-        /* Total Score Display */
-        .total-display {
-            background: #d1e7dd;
-            color: #0f5132;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.4rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Submit Button */
-        .btn-submit {
-            width: 100%;
-            background: #10b981;
-            color: white;
+        .nav-btn {
+            background: #334155;
+            color: #f8fafc;
             border: none;
-            padding: 14px;
-            font-size: 1.1rem;
+            padding: 10px 20px;
             font-weight: 800;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             transition: 0.2s;
         }
-        .btn-submit:hover {
-            background: #059669;
-        }
+        .nav-btn:hover { background: #475569; }
+        .nav-btn.active { background: #0284c7; color: white; }
 
-        footer {
+        .app-section { display: none; padding: 20px; min-height: calc(100vh - 65px); }
+        .app-section.active { display: block; }
+
+        /* ==========================================
+           1. DASHBOARD THEME & STYLES (DARK/LED STYLE)
+           ========================================== */
+        .bg-dashboard {
+            background: radial-gradient(circle at center, #0f2b1d 0%, #05140e 100%);
+            color: #ffffff;
+            padding: 25px;
+        }
+        .dashboard-container {
+            border: 5px solid #10b981;
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.4), inset 0 0 25px rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            background: rgba(10, 25, 18, 0.9);
+            max-width: 1500px;
+            width: 100%;
+            margin: auto;
+            padding: 35px;
+        }
+        .main-header {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.75rem;
-            color: #94a3b8;
+            border-bottom: 3px dashed rgba(16, 185, 129, 0.4);
+            padding-bottom: 20px;
+            margin-bottom: 35px;
+        }
+        .main-header h1 {
+            font-size: 3rem;
+            letter-spacing: 3px;
+            color: #ffeb3b;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.6);
+            font-weight: 900;
+        }
+        .main-header p {
+            color: #a7f3d0;
+            font-size: 1.5rem;
+            margin-top: 8px;
             font-weight: 700;
         }
+        .main-layout { display: table; width: 100%; border-collapse: separate; border-spacing: 25px 0; }
+        .main-col-left { display: table-cell; width: 70%; vertical-align: top; }
+        .main-col-right { display: table-cell; width: 30%; vertical-align: top; }
+        
+        .stage-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.25) 100%);
+            border: 3px solid #047857;
+            border-radius: 16px;
+            padding: 45px 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+        .live-badge {
+            position: absolute; top: 20px; left: 20px; background: #ef4444; color: white;
+            padding: 6px 18px; border-radius: 25px; font-weight: 800; font-size: 1rem;
+            animation: blink 1.2s infinite; box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
+        }
+        .item-category { font-size: 1.8rem; color: #34d399; font-weight: 800; margin-bottom: 15px; }
+        .current-item { font-size: 4rem; color: #ffffff; font-weight: 900; margin-bottom: 25px; text-shadow: 0 3px 8px rgba(0,0,0,0.6); }
+        .on-stage-box { background: rgba(0, 0, 0, 0.5); border-radius: 12px; padding: 30px; display: inline-block; min-width: 85%; border-left: 8px solid #ffeb3b; }
+        .chest-num { font-size: 2.2rem; color: #ffeb3b; font-weight: 900; }
+        .participant-name { font-size: 3.5rem; color: #ffffff; font-weight: 800; margin-top: 10px; }
+
+        .sidebar-panel { background: rgba(15, 32, 24, 0.85); border: 3px solid #115e59; border-radius: 16px; padding: 25px; min-height: 100%; }
+        .sidebar-title { font-size: 1.6rem; color: #38bdf8; font-weight: 900; margin-bottom: 20px; border-bottom: 3px solid #115e59; padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .next-list-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 18px 20px; margin-bottom: 15px; }
+        .next-chest { color: #38bdf8; font-weight: 900; font-size: 1.2rem; }
+        .next-name { font-size: 1.8rem; font-weight: 800; color: #f1f5f9; margin-top: 4px; }
+
+        .result-overlay { display: none; background: linear-gradient(to bottom, rgba(15,23,42,0.98), rgba(6,78,59,0.98)); border: 4px solid #ffd700; border-radius: 16px; padding: 35px; text-align: center; margin-top: 25px; }
+        .result-title { color: #ffd700; font-size: 2.8rem; font-weight: 900; margin-bottom: 25px; text-shadow: 0 0 20px rgba(255,215,0,0.5); }
+        .winners-row { display: table; width: 100%; table-layout: fixed; margin-top: 20px; }
+        .winner-position-cell { display: table-cell; vertical-align: bottom; padding: 12px; }
+        .winner-podium { background: rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px 15px; }
+        .podium-1 { border-color: #ffd700; background: linear-gradient(to top, rgba(255,215,0,0.15), rgba(0,0,0,0.5)); }
+        .podium-2 { border-color: #c0c0c0; background: linear-gradient(to top, rgba(192,192,192,0.15), rgba(0,0,0,0.5)); }
+        .podium-3 { border-color: #cd7f32; background: linear-gradient(to top, rgba(205,127,50,0.15), rgba(0,0,0,0.5)); }
+        .cup-icon { font-size: 3.5rem; margin-bottom: 12px; }
+        .cup-1 { color: #ffd700; } .cup-2 { color: #c0c0c0; } .cup-3 { color: #cd7f32; }
+        .winner-place-text { font-weight: 900; font-size: 1.3rem; margin-bottom: 8px; }
+        .w-name { font-size: 2rem; font-weight: 800; color: #ffffff; }
+        .w-chest { color: #a7f3d0; font-weight: 700; font-size: 1.2rem; margin-top: 5px; }
+
+        /* ==========================================
+           2. ADMIN PANEL THEME & STYLES (LIGHT/WHITE STYLE)
+           ========================================== */
+        .bg-admin { background: #f8fafc; color: #1e293b; padding: 20px; }
+        .admin-container { max-width: 1300px; margin: auto; }
+        .admin-header { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border-left: 6px solid #0284c7; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header h1 { font-size: 1.8rem; color: #0284c7; font-weight: 900; }
+        .config-card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; }
+        .card { background: #ffffff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .section-title { font-size: 1.2rem; font-weight: 800; color: #1e293b; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: #475569; margin-bottom: 6px; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; font-weight: 600; }
+        .radio-group { display: flex; gap: 20px; }
+        .radio-option { display: flex; align-items: center; gap: 6px; font-weight: 600; cursor: pointer; }
+        .btn { padding: 12px 20px; border: none; border-radius: 6px; font-weight: 800; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-primary { background: #0284c7; color: white; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-danger { background: #ef4444; color: white; padding: 6px 12px; font-size: 0.85rem; }
+        .btn-warning { background: #f59e0b; color: white; }
+        
+        table { width: 100%; border-collapse: collapse; background: white; margin-top: 15px; }
+        th, td { padding: 14px 15px; border-bottom: 1px solid #e2e8f0; font-size: 0.95rem; }
+        th { background: #f1f5f9; font-weight: 800; color: #475569; }
+        td { font-weight: 600; }
+        .score-input { width: 70px; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; text-align: center; font-weight: 700; }
+
+        /* ==========================================
+           3. JUDGES PANEL THEME & STYLES (LIGHT/WHITE STYLE)
+           ========================================== */
+        .bg-judge { background: #f1f5f9; padding: 20px; }
+        .judge-wrapper { max-width: 550px; width: 100%; margin: auto; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); padding: 25px; border: 1px solid #e2e8f0; }
+        .judge-header { text-align: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-bottom: 20px; }
+        .event-badge { background: #e0f2fe; color: #0369a1; padding: 12px; border-radius: 8px; text-align: center; font-weight: 800; font-size: 1.2rem; margin-bottom: 20px; }
+        .criteria-card { background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .input-row label { font-size: 0.95rem; font-weight: 700; color: #334155; }
+        .score-box { width: 90px; padding: 10px; font-size: 1.2rem; font-weight: 800; text-align: center; border: 2px solid #cbd5e1; border-radius: 8px; }
+        .total-display { background: #d1e7dd; color: #0f5132; padding: 15px; border-radius: 10px; text-align: center; font-size: 1.4rem; font-weight: 900; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+
+        .footer-text { text-align: center; margin-top: 30px; font-size: 0.9rem; color: #64748b; font-weight: 700; }
+        .footer-text span { color: #0284c7; font-weight: 900; }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
 
-    <div class="judge-container">
-        <!-- Header -->
-        <div class="judge-header">
-            <h1>ATAVA FestHub</h1>
-            <p>Official Judging Portal (മൊബൈൽ പാനൽ)</p>
-        </div>
+    <div class="master-nav">
+        <button class="nav-btn active" onclick="switchView('adminView', this)"><i class="fa-solid fa-gears"></i> 1. Admin Controller</button>
+        <button class="nav-btn" onclick="switchView('dashboardView', this)"><i class="fa-solid fa-desktop"></i> 2. LED Display Board</button>
+        <button class="nav-btn" onclick="switchView('judgeView', this)"><i class="fa-solid fa-mobile-screen"></i> 3. Judges Mobile Portal</button>
+    </div>
 
-        <!-- Event Name -->
-        <div class="event-badge" id="lblEvent">
-            <i class="fa-solid fa-microphone-lines"></i> MADH SONG (മദ്ഹ് ഗാനം)
-        </div>
+    <div id="adminView" class="app-section bg-admin active">
+        <div class="admin-container">
+            <header class="admin-header">
+                <div>
+                    <h1>ATAVA <span>FestHub Manager</span></h1>
+                    <p>Meelad Art Festival Management Hub</p>
+                </div>
+                <div style="font-weight: 800; color: #0f5132; background: #d1e7dd; padding: 8px 15px; border-radius: 20px;">
+                    <i class="fa-solid fa-hard-drive"></i> LocalStorage Connected
+                </div>
+            </header>
 
-        <!-- Select Chest Number -->
-        <div class="selector-group">
-            <label><i class="fa-solid fa-user-check"></i> മത്സരാർത്ഥിയെ തിരഞ്ഞെടുക്കുക</label>
-            <select id="chestSelect" class="large-select" onchange="loadStudentName()">
-                <option value="">-- select chest number --</option>
-                <option value="101">101 - Muhammed Faisal</option>
-                <option value="104">104 - Muhammed Shamil K.</option>
-                <option value="105">105 - Ahmed Yasir</option>
-                <option value="112">112 - Fathima Riya</option>
-            </select>
-        </div>
+            <div class="config-card">
+                <div class="section-title"><i class="fa-solid fa-sliders"></i> 1. Category Settings</div>
+                <div class="form-group">
+                    <label>Choose Category Basis</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="catType" value="class" checked onchange="handleCatModeChange()"> Class Wise (1 to 12)
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="catType" value="age" onchange="handleCatModeChange()"> Age Group (Sub Junior, Junior, etc)
+                        </label>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Detailed Scoring Form -->
-        <div class="criteria-card">
-            <div class="criteria-title"><i class="fa-solid fa-star"></i> മാർക്കുകൾ നൽകുക (Max 100)</div>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="section-title"><i class="fa-solid fa-user-plus"></i> 2. Participant Registration</div>
+                    <form id="regForm" onsubmit="saveNewParticipant(event)">
+                        <div class="form-group">
+                            <label>Student Name</label>
+                            <input type="text" id="admName" class="form-control" required placeholder="Enter student full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Chest Number</label>
+                            <input type="number" id="admChest" class="form-control" required placeholder="Enter Chest No">
+                        </div>
+                        <div class="form-group">
+                            <label id="admCatLabel">Class</label>
+                            <select id="admCategory" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Item</label>
+                            <select id="admEvent" class="form-control">
+                                <option value="Madh Song">Madh Song (മദ്ഹ് ഗാനം)</option>
+                                <option value="Qirath">Qirath (ഖിറാഅത്ത്)</option>
+                                <option value="Speech">Speech (പ്രസംഗം)</option>
+                                <option value="Daff Mutt">Daff Mutt (ദഫ് മുട്ട്)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Add Participant</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="section-title"><i class="fa-solid fa-bullhorn"></i> 3. Live Stage Controller</div>
+                    <p style="font-size: 0.9rem; color: #64748b; font-weight: 600; margin-bottom: 15px;">
+                        Control what items are shown live on the stage LED screen projection window.
+                    </p>
+                    <div class="form-group">
+                        <label>Active Event Group</label>
+                        <select id="ctrlEventFilter" class="form-control" onchange="syncStageOptions()">
+                            <option value="Madh Song">Madh Song (മദ്ഹ് ഗാനം)</option>
+                            <option value="Qirath">Qirath (ഖിറാഅത്ത്)</option>
+                            <option value="Speech">Speech (പ്രസംഗം)</option>
+                            <option value="Daff Mutt">Daff Mutt (ദഫ് മുട്ട്)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Current On-Stage Student</label>
+                        <select id="ctrlOnStageStudent" class="form-control"></select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-success" onclick="pushToLiveStage()"><i class="fa-solid fa-play"></i> Push to LED Screen</button>
+                        <button class="btn btn-warning" onclick="triggerLiveResultAnnouncement()"><i class="fa-solid fa-trophy"></i> Announce Results</button>
+                        <button class="btn btn-danger" onclick="clearResultOverlay()"><i class="fa-solid fa-circle-xmark"></i> Stop Result</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="section-title"><i class="fa-solid fa-list-check"></i> 4. Score Sheets & Hybrid Data Matrix</div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Chest No</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Event Item</th>
+                                <th>Score</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
             
-            <!-- Criteria 1 -->
-            <div class="input-row">
-                <label>1. അവതരണം / ആലാപനം (Presentation - 40)</label>
-                <input type="number" id="c1" class="score-box" min="0" max="40" placeholder="0" oninput="calculateTotal()">
-            </div>
-
-            <!-- Criteria 2 -->
-            <div class="input-row">
-                <label>2. ഉച്ചാരണം / സാഹിത്യം (Pronunciation - 30)</label>
-                <input type="number" id="c2" class="score-box" min="0" max="30" placeholder="0" oninput="calculateTotal()">
-            </div>
-
-            <!-- Criteria 3 -->
-            <div class="input-row">
-                <label>3. ശബ്ദം / രാഗം (Melody & Tone - 30)</label>
-                <input type="number" id="c3" class="score-box" min="0" max="30" placeholder="0" oninput="calculateTotal()">
-            </div>
+            <div class="footer-text">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
         </div>
+    </div>
 
-        <!-- Total View -->
-        <div class="total-display">
-            <span>ആകെ മാർക്ക് (TOTAL):</span>
-            <span id="totalScore">0 / 100</span>
+    <div id="dashboardView" class="app-section bg-dashboard">
+        <div class="dashboard-container">
+            <div class="main-header">
+                <h1 id="ledFestTitle">ATAVA FESTHUB 2026</h1>
+                <p id="ledSubTitle">MAHLLUL MARHABA MADRASA ART FESTIVAL</p>
+            </div>
+
+            <div class="main-layout">
+                <div class="main-col-left">
+                    <div class="stage-card" id="ledStageCard">
+                        <div class="live-badge"><i class="fa-solid fa-circle"></i> LIVE STAGE</div>
+                        <div class="item-category" id="ledCategory">JUNIOR CATEGORY</div>
+                        <div class="current-item" id="ledEventName">MADH SONG (മദ്ഹ് ഗാനം)</div>
+                        
+                        <div class="on-stage-box">
+                            <div class="chest-num"><i class="fa-solid fa-id-card"></i> CHEST NO: <span id="ledChestNo">---</span></div>
+                            <div class="participant-name" id="ledPartName">Waiting for sync...</div>
+                        </div>
+                    </div>
+
+                    <div class="result-overlay" id="ledResultOverlay">
+                        <div class="result-title" id="ledResultTitle"><i class="fa-solid fa-trophy"></i> WINNERS DECLARATION</div>
+                        <div class="winners-row">
+                            <div class="winner-position-cell">
+                                <div class="winner-podium podium-2">
+                                    <div class="cup-icon cup-2"><i class="fa-solid fa-trophy"></i></div>
+                                    <div class="winner-place-text" style="color: #cbd5e1;">2nd Place</div>
+                                    <div class="w-name" id="w2-name">---</div>
+                                    <div class="w-chest" id="w2-chest">Chest: --</div>
+                                </div>
+                            </div>
+                            <div class="winner-position-cell">
+                                <div class="winner-podium podium-1">
+                                    <div class="cup-icon cup-1"><i class="fa-solid fa-crown"></i></div>
+                                    <div class="winner-place-text" style="color: #ffd700;">1st Place / WINNER</div>
+                                    <div class="w-name" id="w1-name">---</div>
+                                    <div class="w-chest" id="w1-chest">Chest: --</div>
+                                </div>
+                            </div>
+                            <div class="winner-position-cell">
+                                <div class="winner-podium podium-3">
+                                    <div class="cup-icon cup-3"><i class="fa-solid fa-trophy"></i></div>
+                                    <div class="winner-place-text" style="color: #cd7f32;">3rd Place</div>
+                                    <div class="w-name" id="w3-name">---</div>
+                                    <div class="w-chest" id="w3-chest">Chest: --</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-col-right">
+                    <div class="sidebar-panel">
+                        <div class="sidebar-title"><i class="fa-solid fa-forward-step"></i> NEXT UP (അടുത്തത്)</div>
+                        <div id="ledNextUpContainer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-text" style="color: #475569;">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
         </div>
+    </div>
 
-        <!-- Submit -->
-        <button class="btn-submit" onclick="submitJudgeScore()">
-            <i class="fa-solid fa-paper-plane"></i> മാർക്ക് സമർപ്പിക്കുക (Submit)
-        </button>
+    <div id="judgeView" class="app-section bg-judge">
+        <div class="judge-wrapper">
+            <div class="judge-header">
+                <h1>ATAVA FestHub</h1>
+                <p>Official Evaluation Interface (Judges View)</p>
+            </div>
 
-        <footer>
-            POWERED BY ATAVA DIGITAL SERVICES
-        </footer>
+            <div class="event-badge" id="jdgActiveItemBadge">
+                <i class="fa-solid fa-microphone-lines"></i> Sync from Admin Panel
+            </div>
+
+            <div class="form-group">
+                <label style="font-weight: 800; color: #334155;"><i class="fa-solid fa-user-check"></i> Choose Chest Number</label>
+                <select id="jdgStudentSelector" class="form-control" style="font-size: 1.1rem; font-weight: 700; height: auto; padding: 12px;" onchange="syncJudgeSelectedDetails()">
+                    <option value="">-- Choose active candidate --</option>
+                </select>
+            </div>
+
+            <div class="criteria-card">
+                <div style="font-size: 1rem; font-weight: 800; color: #475569; margin-bottom: 15px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
+                    Criteria Score Sheets (Max 100 Points)
+                </div>
+                
+                <div class="input-row">
+                    <label>1. Presentation / ആലാപനം (Max 40)</label>
+                    <input type="number" id="jdgC1" class="score-box" min="0" max="40" placeholder="0" oninput="calcJudgeTotal()">
+                </div>
+
+                <div class="input-row">
+                    <label>2. Pronunciation / ഉച്ചാരണം (Max 30)</label>
+                    <input type="number" id="jdgC2" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
+                </div>
+
+                <div class="input-row">
+                    <label>3. Melody & Tone / ശബ്ദം (Max 30)</label>
+                    <input type="number" id="jdgC3" class="score-box" min="0" max="30" placeholder="0" oninput="calcJudgeTotal()">
+                </div>
+            </div>
+
+            <div class="total-display">
+                <span>TOTAL ENGINE SCORE:</span>
+                <span id="jdgTotalLabel">0 / 100</span>
+            </div>
+
+            <button class="btn-success" style="width: 100%; justify-content: center; padding: 15px; font-size: 1.1rem;" onclick="submitJudgeForm()">
+                <i class="fa-solid fa-paper-plane"></i> Submit Evaluated Score
+            </button>
+
+            <div class="footer-text">POWERED BY <span>ATAVA DIGITAL SERVICES</span></div>
+        </div>
     </div>
 
     <script>
-        // Extract Event from URL query string if available
-        const urlParams = new URLSearchParams(window.location.search);
-        const eventParam = urlParams.get('event');
-        if (eventParam) {
-            document.getElementById('lblEvent').innerHTML = `<i class="fa-solid fa-microphone-lines"></i> ${decodeURIComponent(eventParam).toUpperCase()}`;
+        // Global Data Store Syncing with LocalStorage
+        let dataset = JSON.parse(localStorage.getItem('atava_festhub_master')) || [];
+        
+        const masterClasses = ['Class 1', 'Class 2', 'Class 3', 'Class 4', 'Class 5', 'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'];
+        const masterAges = ['Sub Junior (U-11)', 'Junior (U-14)', 'Senior (U-17)', 'General'];
+
+        function switchView(viewId, element) {
+            document.querySelectorAll('.app-section').forEach(section => section.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(viewId).classList.add('active');
+            element.classList.add('active');
+            
+            // Sync all dropboxes and variables when changing layouts
+            syncStageOptions();
+            refreshAdminTable();
+            updateLiveLEDQueue();
         }
 
-        function calculateTotal() {
-            const c1 = parseFloat(document.getElementById('c1').value) || 0;
-            const c2 = parseFloat(document.getElementById('c2').value) || 0;
-            const c3 = parseFloat(document.getElementById('c3').value) || 0;
-
-            // Simple validation limit check
-            if(c1 > 40) { alert('പരമാവധി മാർക്ക് 40 ആണ്!'); document.getElementById('c1').value = 40; return; }
-            if(c2 > 30) { alert('പരമാവധി മാർക്ക് 30 ആണ്!'); document.getElementById('c2').value = 30; return; }
-            if(c3 > 30) { alert('പരമാവധി മാർക്ക് 30 ആണ്!'); document.getElementById('c3').value = 30; return; }
-
-            const total = c1 + c2 + c3;
-            document.getElementById('totalScore').innerText = total + " / 100";
+        function handleCatModeChange() {
+            const mode = document.querySelector('input[name="catType"]:checked').value;
+            const select = document.getElementById('admCategory');
+            const label = document.getElementById('admCatLabel');
+            
+            select.innerHTML = '';
+            if(mode === 'class') {
+                label.innerText = "Class Level (മദ്രസ ക്ലാസ്)";
+                masterClasses.forEach(c => select.innerHTML += `<option value="${c}">${c}</option>`);
+            } else {
+                label.innerText = "Age Category (പ്രായ വിഭാഗം)";
+                masterAges.forEach(a => select.innerHTML += `<option value="${a}">${a}</option>`);
+            }
         }
 
-        function submitJudgeScore() {
-            const chest = document.getElementById('chestSelect').value;
-            const total = document.getElementById('totalScore').innerText.split(' ')[0];
+        function saveNewParticipant(e) {
+            e.preventDefault();
+            const name = document.getElementById('admName').value.trim();
+            const chest = document.getElementById('admChest').value.trim();
+            const cat = document.getElementById('admCategory').value;
+            const eventItem = document.getElementById('admEvent').value;
 
-            if(!chest) {
-                alert('ദയവായി ചെസ്റ്റ് നമ്പർ തിരഞ്ഞെടുക്കുക!');
+            if(dataset.some(p => p.chest === chest)) {
+                alert('ഈ ചെസ്റ്റ് നമ്പർ മുൻപ് രജിസ്റ്റർ ചെയ്തിട്ടുണ്ട് (Chest number already allocated)!');
                 return;
             }
 
-            if(total == 0) {
-                if(!confirm('മാർക്ക് ഒന്നും നൽകാതെ സബ്മിറ്റ് ചെയ്യണോ?')) return;
+            dataset.push({ chest, name, cat, eventItem, score: '' });
+            commitData();
+            document.getElementById('regForm').reset();
+            refreshAdminTable();
+            syncStageOptions();
+        }
+
+        function deleteParticipantRecord(index) {
+            if(confirm('ഈ കുട്ടിയുടെ രജിസ്ട്രേഷൻ ഒഴിവാക്കണോ?')) {
+                dataset.splice(index, 1);
+                commitData();
+                refreshAdminTable();
+                syncStageOptions();
+            }
+        }
+
+        function handleDirectScoreEdit(index, value) {
+            dataset[index].score = value;
+            localStorage.setItem('atava_festhub_master', JSON.stringify(dataset));
+        }
+
+        function commitData() {
+            localStorage.setItem('atava_festhub_master', JSON.stringify(dataset));
+        }
+
+        function refreshAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            if(dataset.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#94a3b8;">No records saved yet. Fill out the form above!</td></tr>`;
+                return;
             }
 
-            alert(`Chest No: ${chest}-ന്റെ മാർക്ക് വിജയകരമായി റെക്കോർഡ് ചെയ്തു!`);
-            
-            // Clear fields for next entry
-            document.getElementById('c1').value = '';
-            document.getElementById('c2').value = '';
-            document.getElementById('c3').value = '';
-            document.getElementById('chestSelect').value = '';
-            document.getElementById('totalScore').innerText = "0 / 100";
+            dataset.forEach((p, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="color:#0284c7; font-weight:800;">${p.chest}</td>
+                        <td>${p.name}</td>
+                        <td><span style="background:#f1f5f9; padding:4px 8px; border-radius:4px;">${p.cat}</span></td>
+                        <td>${p.eventItem}</td>
+                        <td>
+                            <input type="number" class="score-input" value="${p.score}" min="0" max="100" oninput="handleDirectScoreEdit(${index}, this.value)" placeholder="0">
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" onclick="deleteParticipantRecord(${index})"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
-        function loadStudentName() {
-            // Future linking to dynamically fetch localstorage user data if shared
+        function syncStageOptions() {
+            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            const stageSelect = document.getElementById('ctrlOnStageStudent');
+            const judgeSelect = document.getElementById('jdgStudentSelector');
+            
+            document.getElementById('jdgActiveItemBadge').innerHTML = `<i class="fa-solid fa-microphone-lines"></i> ${filterEvent.toUpperCase()}`;
+            
+            stageSelect.innerHTML = '<option value="">-- Choose Candidate --</option>';
+            judgeSelect.innerHTML = '<option value="">-- Choose Candidate --</option>';
+            
+            const filtered = dataset.filter(p => p.eventItem === filterEvent);
+            filtered.forEach(p => {
+                const optStr = `${p.chest} - ${p.name} (${p.cat})`;
+                stageSelect.innerHTML += `<option value="${p.chest}">${optStr}</option>`;
+                judgeSelect.innerHTML += `<option value="${p.chest}">${optStr}</option>`;
+            });
         }
+
+        function pushToLiveStage() {
+            const chest = document.getElementById('ctrlOnStageStudent').value;
+            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            
+            document.getElementById('ledResultOverlay').style.display = 'none';
+            document.getElementById('ledStageCard').style.display = 'block';
+
+            if(!chest) {
+                document.getElementById('ledChestNo').innerText = "---";
+                document.getElementById('ledPartName').innerText = "Stage Empty";
+                return;
+            }
+
+            const student = dataset.find(p => p.chest === chest);
+            if(student) {
+                document.getElementById('ledCategory').innerText = student.cat.toUpperCase();
+                document.getElementById('ledEventName').innerText = student.eventItem.toUpperCase();
+                document.getElementById('ledChestNo').innerText = student.chest;
+                document.getElementById('ledPartName').innerText = student.name;
+            }
+            updateLiveLEDQueue();
+        }
+
+        function updateLiveLEDQueue() {
+            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            const currentChest = document.getElementById('ctrlOnStageStudent').value;
+            const queueBox = document.getElementById('ledNextUpContainer');
+            
+            queueBox.innerHTML = '';
+            
+            // Fetch remaining candidates in queue matching this event item
+            const remaining = dataset.filter(p => p.eventItem === filterEvent && p.chest !== currentChest);
+            
+            if(remaining.length === 0) {
+                queueBox.innerHTML = '<div style="color:#64748b; font-weight:700; text-align:center; padding:20px;">No upcoming candidates.</div>';
+                return;
+            }
+
+            remaining.slice(0, 3).forEach(p => {
+                queueBox.innerHTML += `
+                    <div class="next-list-item">
+                        <div class="next-chest">CHEST NO: ${p.chest}</div>
+                        <div class="next-name">${p.name}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function triggerLiveResultAnnouncement() {
+            const filterEvent = document.getElementById('ctrlEventFilter').value;
+            
+            // Sort filtered participants based on highest score
+            const competitors = dataset
+                .filter(p => p.eventItem === filterEvent && p.score !== '')
+                .sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+
+            document.getElementById('ledStageCard').style.display = 'none';
+            document.getElementById('ledResultOverlay').style.display = 'block';
+            document.getElementById('ledResultTitle').innerHTML = `<i class="fa-solid fa-trophy"></i> WINNERS: ${filterEvent.toUpperCase()}`;
+
+            document.getElementById('w1-name').innerText = competitors[0] ? competitors[0].name : "---";
+            document.getElementById('w1-chest').innerText = competitors[0] ? "Chest No: " + competitors[0].chest : "Chest: --";
+
+            document.getElementById('w2-name').innerText = competitors[1] ? competitors[1].name : "---";
+            document.getElementById('w2-chest').innerText = competitors[1] ? "Chest No: " + competitors[1].chest : "Chest: --";
+
+            document.getElementById('w3-name').innerText = competitors[2] ? competitors[2].name : "---";
+            document.getElementById('w3-chest').innerText = competitors[2] ? "Chest No: " + competitors[2].chest : "Chest: --";
+        }
+
+        function clearResultOverlay() {
+            document.getElementById('ledResultOverlay').style.display = 'none';
+            document.getElementById('ledStageCard').style.display = 'block';
+        }
+
+        // Judges view calculation engine rules
+        function calcJudgeTotal() {
+            const c1 = parseFloat(document.getElementById('jdgC1').value) || 0;
+            const c2 = parseFloat(document.getElementById('jdgC2').value) || 0;
+            const c3 = parseFloat(document.getElementById('jdgC3').value) || 0;
+
+            if(c1 > 40) { alert('Presentation max 40 point limits!'); document.getElementById('jdgC1').value = 40; return; }
+            if(c2 > 30) { alert('Pronunciation max 30 point limits!'); document.getElementById('jdgC2').value = 30; return; }
+            if(c3 > 30) { alert('Melody max 30 point limits!'); document.getElementById('jdgC3').value = 30; return; }
+
+            document.getElementById('jdgTotalLabel').innerText = (c1 + c2 + c3) + " / 100";
+        }
+
+        function submitJudgeForm() {
+            const chest = document.getElementById('jdgStudentSelector').value;
+            const scoreTotal = document.getElementById('jdgTotalLabel').innerText.split(' ')[0];
+
+            if(!chest) {
+                alert('ദയവായി ഒരു ചെസ്റ്റ് നമ്പർ സെലക്ട് ചെയ്യുക!');
+                return;
+            }
+
+            const idx = dataset.findIndex(p => p.chest === chest);
+            if(idx !== -1) {
+                dataset[idx].score = scoreTotal;
+                commitData();
+                alert(`Chest ${chest} evaluation scores submitted successfully!`);
+                
+                // Clear fields safely
+                document.getElementById('jdgC1').value = '';
+                document.getElementById('jdgC2').value = '';
+                document.getElementById('jdgC3').value = '';
+                document.getElementById('jdgTotalLabel').innerText = "0 / 100";
+                document.getElementById('jdgStudentSelector').value = '';
+                
+                refreshAdminTable();
+            }
+        }
+
+        // Initialize Core Engine configurations on windows startup load
+        handleCatModeChange();
+        refreshAdminTable();
     </script>
 </body>
 </html>
